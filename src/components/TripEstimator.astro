@@ -128,7 +128,7 @@
 <script>
   import { animateCounter } from '../scripts/animations';
 
-  document.addEventListener('astro:page-load', () => {
+  function initTripEstimator() {
     const slider = document.getElementById('duration-slider') as HTMLInputElement;
     const durationVal = document.getElementById('duration-val');
     const priceCounter = document.getElementById('price-counter');
@@ -208,5 +208,12 @@
         }));
       });
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTripEstimator);
+  } else {
+    initTripEstimator();
+  }
+  document.addEventListener('astro:page-load', initTripEstimator);
 </script>

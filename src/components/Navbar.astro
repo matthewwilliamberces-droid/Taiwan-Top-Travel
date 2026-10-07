@@ -98,7 +98,7 @@
 </header>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initNavbar() {
     const menuBtn = document.getElementById('mobile-menu-btn');
     const drawer = document.getElementById('mobile-nav-drawer');
     const iconOpen = document.getElementById('menu-icon-open');
@@ -135,5 +135,12 @@
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => toggleMenu(true));
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+  } else {
+    initNavbar();
+  }
+  document.addEventListener('astro:page-load', initNavbar);
 </script>

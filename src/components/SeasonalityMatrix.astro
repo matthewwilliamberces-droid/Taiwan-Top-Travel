@@ -1,4 +1,4 @@
-﻿---
+---
 import { SEASONALITY_DATA } from '../data/seasonality';
 ---
 
@@ -110,7 +110,7 @@ import { SEASONALITY_DATA } from '../data/seasonality';
 <script>
   import { SEASONALITY_DATA } from '../data/seasonality';
 
-  document.addEventListener('astro:page-load', () => {
+  function initSeasonalityMatrix() {
     const tabs = document.querySelectorAll('.month-tab');
     const badgeEl = document.getElementById('spotlight-badge');
     const monthEl = document.getElementById('spotlight-month');
@@ -148,6 +148,13 @@ import { SEASONALITY_DATA } from '../data/seasonality';
         }
       });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSeasonalityMatrix);
+  } else {
+    initSeasonalityMatrix();
+  }
+  document.addEventListener('astro:page-load', initSeasonalityMatrix);
 </script>
 

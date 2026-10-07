@@ -277,7 +277,7 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
 <script>
   import { traceSvgRoute } from '../scripts/animations';
 
-  document.addEventListener('astro:page-load', () => {
+  function initSplitRouteMap() {
     const cards = document.querySelectorAll('.itinerary-card');
     const routeTrace = document.getElementById('active-route-trace') as unknown as SVGPathElement;
     const titleEl = document.getElementById('active-map-title');
@@ -321,5 +321,12 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
         }
       });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSplitRouteMap);
+  } else {
+    initSplitRouteMap();
+  }
+  document.addEventListener('astro:page-load', initSplitRouteMap);
 </script>

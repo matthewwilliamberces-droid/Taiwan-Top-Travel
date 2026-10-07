@@ -17,7 +17,7 @@ export function initHeroAnimation(containerId: string = '#hero-section') {
   const scope = createScope({ root });
 
   scope.add(() => {
-    // 1. Snappy staggered reveal of badge, headline, subtitle, and CTA cluster (LCP optimized)
+    // 1. Staggered reveal of badge, headline, subtitle, and CTA cluster (LCP flicker-free)
     animate('[data-animate="hero-badge"]', {
       opacity: [0, 1],
       y: [12, 0],
@@ -26,35 +26,34 @@ export function initHeroAnimation(containerId: string = '#hero-section') {
       ease: 'outExpo',
     });
 
+    // LCP text elements paint immediately in HTML; polish position without snapping opacity
     animate('[data-hero-word]', {
-      opacity: [0, 1],
-      y: [16, 0],
-      duration: 650,
-      delay: stagger(80, { start: 0 }),
+      y: [10, 0],
+      duration: 500,
+      delay: stagger(60, { start: 0 }),
       ease: 'outQuart',
     });
 
     animate('[data-animate="hero-title-sub"]', {
-      opacity: [0, 1],
-      y: [14, 0],
-      duration: 600,
-      delay: 260,
+      y: [8, 0],
+      duration: 500,
+      delay: 180,
       ease: 'outQuad',
     });
 
     animate('[data-animate="hero-subtitle"]', {
-      opacity: [0, 1],
-      y: [16, 0],
-      duration: 600,
-      delay: 320,
+      y: [8, 0],
+      duration: 500,
+      delay: 220,
       ease: 'outExpo',
     });
 
+    // Secondary actions and metrics fade in smoothly
     animate('[data-animate="hero-cta"]', {
       opacity: [0, 1],
       y: [16, 0],
       duration: 600,
-      delay: 380,
+      delay: 300,
       ease: 'outExpo',
     });
 
@@ -62,7 +61,7 @@ export function initHeroAnimation(containerId: string = '#hero-section') {
       opacity: [0, 1],
       y: [12, 0],
       duration: 600,
-      delay: 450,
+      delay: 380,
       ease: 'outExpo',
     });
 

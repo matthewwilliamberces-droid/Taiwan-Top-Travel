@@ -251,7 +251,7 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
 </section>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initConciergeWizard() {
     let currentStep = 1;
     const totalSteps = 4;
 
@@ -372,5 +372,12 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
         wizardSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initConciergeWizard);
+  } else {
+    initConciergeWizard();
+  }
+  document.addEventListener('astro:page-load', initConciergeWizard);
 </script>

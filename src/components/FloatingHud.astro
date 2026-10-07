@@ -61,7 +61,7 @@
 </aside>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initHud() {
     const hudContainer = document.getElementById('floating-hud-controls');
     const backToTopBtn = document.getElementById('hud-back-to-top-btn');
     const progressCircle = document.getElementById('hud-progress-circle');
@@ -132,5 +132,12 @@
         });
       });
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHud);
+  } else {
+    initHud();
+  }
+  document.addEventListener('astro:page-load', initHud);
 </script>

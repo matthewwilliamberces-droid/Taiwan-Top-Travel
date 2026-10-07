@@ -127,7 +127,7 @@ import { TRANSIT_HUBS } from '../data/transit';
 <script>
   import { TRANSIT_HUBS } from '../data/transit';
 
-  document.addEventListener('astro:page-load', () => {
+  function initTransitVisualizer() {
     const nodes = document.querySelectorAll('.station-node');
     const progressBar = document.getElementById('progress-bar-line');
     const titleEl = document.getElementById('station-detail-title');
@@ -168,5 +168,12 @@ import { TRANSIT_HUBS } from '../data/transit';
         }
       });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTransitVisualizer);
+  } else {
+    initTransitVisualizer();
+  }
+  document.addEventListener('astro:page-load', initTransitVisualizer);
 </script>

@@ -310,7 +310,7 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
 <script>
   import { animate, createScope } from 'animejs';
 
-  document.addEventListener('astro:page-load', () => {
+  function initRunway() {
     const container = document.getElementById('itinerary-runway-container');
     const track = document.getElementById('itinerary-runway-track');
     const progressBar = document.getElementById('runway-progress-bar');
@@ -510,5 +510,12 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
         }
       });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRunway);
+  } else {
+    initRunway();
+  }
+  document.addEventListener('astro:page-load', initRunway);
 </script>

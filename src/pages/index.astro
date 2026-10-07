@@ -9,7 +9,6 @@ import TripEstimator from '../components/TripEstimator.astro';
 import ConciergeWizard from '../components/ConciergeWizard.astro';
 import Footer from '../components/Footer.astro';
 import FloatingHud from '../components/FloatingHud.astro';
-import { ClientRouter } from 'astro:transitions';
 ---
 
 <!doctype html>
@@ -44,7 +43,6 @@ import { ClientRouter } from 'astro:transitions';
         }
       </style>
     </noscript>
-    <ClientRouter />
   </head>
   <body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-amber-400 selection:text-zinc-950">
     
@@ -81,9 +79,13 @@ import { ClientRouter } from 'astro:transitions';
     <script>
       import { initHeroAnimation } from '../scripts/animations';
 
-      document.addEventListener('astro:page-load', () => {
-        initHeroAnimation('#hero-section');
-      });
+      const runHeroInit = () => initHeroAnimation('#hero-section');
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runHeroInit);
+      } else {
+        runHeroInit();
+      }
+      document.addEventListener('astro:page-load', runHeroInit);
     </script>
   </body>
 </html>
