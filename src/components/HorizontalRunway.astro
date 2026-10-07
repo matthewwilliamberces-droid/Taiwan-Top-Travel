@@ -425,11 +425,30 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Defer initial layout measurement until after initial paint to avoid blocking critical path
-    requestAnimationFrame(() => {
-      measureLayout();
-      onScroll();
-    });
+    // Lazy layout measurement: ONLY measure when runway approaches viewport
+    // Never touches DOM geometry during cold initial paint of the hero section
+    let isObserved = false;
+    if ('IntersectionObserver' in window && container) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isObserved) {
+            isObserved = true;
+            measureLayout();
+            onScroll();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+      observer.observe(container);
+    } else {
+      window.addEventListener('scroll', () => {
+        if (!isObserved) {
+          isObserved = true;
+          measureLayout();
+          onScroll();
+        }
+      }, { passive: true, once: true });
+    }
 
     // Scroll window smoothly to specific slide index
     function scrollToSlide(index: number) {

@@ -56,6 +56,30 @@ body {
   background: #d4af37;
 }
 
+/* High-Performance Hardware-Accelerated Hero Keyframe Animations (Zero JS Dependency) */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-hero-badge {
+  animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.animate-hero-cta {
+  animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+.animate-hero-stats {
+  animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
 /* Reduced Motion Safety */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -64,10 +88,11 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  [data-animate], [data-hero-word] {
+  [data-animate], [data-hero-word], .animate-hero-badge, .animate-hero-cta, .animate-hero-stats {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
 }
+
 

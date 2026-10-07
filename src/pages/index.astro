@@ -81,25 +81,5 @@ import FloatingHud from '../components/FloatingHud.astro';
 
     <!-- Floating Ergonomic HUD (Back to Top with Progress Ring & Concierge Trigger) -->
     <FloatingHud />
-
-    <!-- Motion Orchestration -->
-    <script>
-      import { initHeroAnimation } from '../scripts/animations';
-
-      const runHeroInit = () => {
-        if ('requestIdleCallback' in window) {
-          (window as any).requestIdleCallback(() => initHeroAnimation('#hero-section'), { timeout: 1200 });
-        } else {
-          requestAnimationFrame(() => initHeroAnimation('#hero-section'));
-        }
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runHeroInit);
-      } else {
-        runHeroInit();
-      }
-      document.addEventListener('astro:page-load', runHeroInit);
-    </script>
   </body>
 </html>

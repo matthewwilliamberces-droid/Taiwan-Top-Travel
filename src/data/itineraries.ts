@@ -37,7 +37,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Luxe Rail',
     tier: 'Ultra-Luxe Bespoke',
     priceEstimate: '$8,400',
-    heroImage: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Flagship 2026',
     summary: 'A seamless luxury circumnavigation connecting Taipei’s Mandarin Oriental, Taroko Gorge’s Silks Place, Sun Moon Lake’s The Lalu, and Tainan’s Silk Place with private helicopter and HSR Business Class transfers.',
     routeStops: ['Taipei', 'Taroko Gorge', 'Sun Moon Lake', 'Alishan', 'Tainan', 'Kaohsiung'],
@@ -55,7 +55,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Mandarin Oriental Taipei',
         desc: 'Fast-track immigration clearance, private luxury chauffeur, and evening tasting menu at 3-Michelin starred Le Palais.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -63,7 +63,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Mandarin Oriental Taipei',
         desc: 'Private curator access to Song Dynasty ceramics and rare imperial jade artifacts before opening hours.',
-        image: 'https://plus.unsplash.com/premium_photo-1661962818476-adac14ed5d46?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661962818476-adac14ed5d46?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -71,7 +71,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Hualien',
         stay: 'Silks Place Taroko',
         desc: 'Scenic business rail to Hualien followed by private escorted canyon walks through Swallow Grotto and Eternal Spring Shrine.',
-        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -79,7 +79,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'East Coast',
         stay: 'Silks Place Taroko',
         desc: 'Private sunrise meditation on Qixingtan beach followed by indigenous Amis farm-to-table cuisine.',
-        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 5,
@@ -87,7 +87,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Nantou',
         stay: 'The Lalu Sun Moon Lake',
         desc: 'Cross-island scenic pass into the central mountain lakes; sunset cruise on a chartered mahogany electric yacht.',
-        image: '/images/the-lalu-sanctuary.png'
+        image: '/images/the-lalu-sanctuary.webp'
       },
       {
         day: 6,
@@ -95,7 +95,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Alishan',
         stay: 'Alishan Indigo / Heritage Manor',
         desc: 'Centenary forest train ascent through cypress groves, private Oolong roast evaluation.',
-        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 7,
@@ -103,7 +103,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Silks Place Tainan',
         desc: 'Private exploration of 17th-century Dutch Forts, ancestral tea houses, and private food historian escort.',
-        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 8,
@@ -111,7 +111,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Kaohsiung',
         stay: 'InterContinental Kaohsiung',
         desc: 'Private harbor yacht charter and evening access to the National Kaohsiung Center for the Arts.',
-        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 9,
@@ -119,7 +119,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Beitou',
         stay: 'Villa 32 Beitou',
         desc: 'High Speed Rail Business class to Taipei, private mineral hot spring sanctuary soak.',
-        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 10,
@@ -127,7 +127,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'New Taipei',
         stay: 'Villa 32 Beitou',
         desc: 'Bypassing crowds via private mountain villa access for sunset tea overlooking the East China Sea.',
-        image: 'https://images.unsplash.com/photo-1540187334920-54e87c2771c0?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1540187334920-54e87c2771c0?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 11,
@@ -135,7 +135,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Mandarin Oriental Taipei',
         desc: 'Private market walk with celebrated Taiwanese chefs and celebratory farewell banquet.',
-        image: 'https://images.unsplash.com/photo-1583560266880-bdd37ea65fe0?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1583560266880-bdd37ea65fe0?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 12,
@@ -143,7 +143,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taoyuan',
         stay: 'Departure',
         desc: 'Private tarmac lounge escort and luxury transfer to international flights.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -157,7 +157,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Culinary',
     tier: 'Private Signature',
     priceEstimate: '$4,600',
-    heroImage: 'https://plus.unsplash.com/premium_photo-1661333506045-aa5cfdb0d8c6?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://plus.unsplash.com/premium_photo-1661333506045-aa5cfdb0d8c6?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Epicurean Favorite',
     summary: 'A curated sensory deep-dive pairing reservations at Le Palais, RAW, and JL Studio with VIP night market tours guided by local food historians.',
     routeStops: ['Taipei', 'Taichung', 'Tainan'],
@@ -175,7 +175,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Regent Taipei',
         desc: 'Chef-led welcome dinner exploring reimagined Taiwanese comfort classics.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -183,7 +183,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Regent Taipei',
         desc: 'Private food historian walk through historic Dadaocheng and Raohe Street.',
-        image: 'https://plus.unsplash.com/premium_photo-1661333506045-aa5cfdb0d8c6?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661333506045-aa5cfdb0d8c6?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -191,7 +191,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taichung',
         stay: 'The Lin Hotel',
         desc: 'HSR transfer to Taichung. Dinner at 3-Star JL Studio blending Southeast Asian spice with Taiwanese terroir.',
-        image: 'https://plus.unsplash.com/premium_photo-1676467962567-3d80fc5b5a64?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1676467962567-3d80fc5b5a64?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -199,7 +199,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Silks Place Tainan',
         desc: 'Exploring early morning beef soup culture, eel noodles, and ancestral shrimp rolls.',
-        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 5,
@@ -207,7 +207,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Silks Place Tainan',
         desc: 'Hands-on black bean soy brewing and private rooftop dinner overlooking Anping port.',
-        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 6,
@@ -215,7 +215,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Regent Taipei',
         desc: 'Artisanal pineapple cake masterclass and farewell fine-dining pairing.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -229,7 +229,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Nature & Peaks',
     tier: 'Ultra-Luxe Bespoke',
     priceEstimate: '$4,200',
-    heroImage: 'https://plus.unsplash.com/premium_photo-1661952578770-79010299a9f9?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://plus.unsplash.com/premium_photo-1661952578770-79010299a9f9?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Sensory Escape',
     summary: 'Retreat 2,500 meters into Taiwan’s spine. Ride the restored Alishan Forest Railway, wake to the sea of clouds at dawn, and pick tea leaves alongside championship roasters.',
     routeStops: ['Chiayi', 'Alishan', 'Yushan Foothills'],
@@ -247,7 +247,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Chiayi / Alishan',
         stay: 'Hotel Indigo Alishan',
         desc: 'Private Mercedes transfer up the emerald ridges of Chiayi into ancient cedar canopies.',
-        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -255,7 +255,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Alishan',
         stay: 'Hotel Indigo Alishan',
         desc: 'Early sunrise walk among 2,000-year-old red cypresses followed by forest bathing meditation.',
-        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1710119487743-48959c984d45?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -263,7 +263,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Meishan',
         stay: 'Boutique Tea Lodge',
         desc: 'Hands-on picking and charcoal roasting workshop at an award-winning micro-plantation.',
-        image: 'https://plus.unsplash.com/premium_photo-1661952578770-79010299a9f9?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661952578770-79010299a9f9?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -271,7 +271,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Yushan Range',
         stay: 'Hotel Indigo Alishan',
         desc: 'Private botanist guided trek through alpine bamboo groves and rhododendron valleys.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 5,
@@ -279,7 +279,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Chiayi / Taipei',
         stay: 'Mandarin Oriental Taipei',
         desc: 'Scenic mountain descent, high-speed rail transfer back to the capital.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -293,7 +293,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Nature & Peaks',
     tier: 'Ultra-Luxe Bespoke',
     priceEstimate: '$3,900',
-    heroImage: 'https://plus.unsplash.com/premium_photo-1694475574231-5bb05dcbbbbd?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://plus.unsplash.com/premium_photo-1694475574231-5bb05dcbbbbd?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Dramatic Coastline',
     summary: 'Carved over millions of years by tectonic collisions, Taroko Gorge features sheer 1,000-meter vertical marble cliffs dropping straight into the deep cobalt Pacific Ocean.',
     routeStops: ['Taipei', 'Hualien', 'Taroko Gorge', 'Qingshui Cliff'],
@@ -311,7 +311,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Hualien',
         stay: 'Silks Place Taroko',
         desc: 'Private luxury express rail from Taipei; check-in to canyon-view executive suite.',
-        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -319,7 +319,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taroko',
         stay: 'Silks Place Taroko',
         desc: 'Special permit private guided walk along the 500m sheer drop cliff edge.',
-        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -327,7 +327,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taroko',
         stay: 'Silks Place Taroko',
         desc: 'Private crystal-clear river dip and gourmet clifftop champagne picnic.',
-        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1723389078089-b6705d29b6d8?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -335,7 +335,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Pacific Ocean',
         stay: 'Gaeavilla Resort Hualien',
         desc: 'Private luxury catamaran cruise sailing past ocean cliffs with dolphin sightings.',
-        image: 'https://images.unsplash.com/photo-1583736209710-ce157f48e350?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1583736209710-ce157f48e350?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 5,
@@ -343,7 +343,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Hualien / Taipei',
         stay: 'Return Transfer',
         desc: 'Private visit to contemporary Taiwanese jade studios before rail return.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -357,7 +357,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Heritage',
     tier: 'Connoisseur Edition',
     priceEstimate: '$2,800',
-    heroImage: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Cultural Core',
     summary: 'Celebrate Tainan’s 400th anniversary with exclusive access to private temple collections, restored Japanese colonial mansions, and imperial courtyard dinners.',
     routeStops: ['Tainan', 'Anping', 'Chikan'],
@@ -374,7 +374,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Silks Place Tainan',
         desc: 'Fort Zeelandia historic briefing and sunset canal cocktail tour.',
-        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -382,7 +382,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Silks Place Tainan',
         desc: 'Walking through century-old herbal pharmacies, wood-carving guilds, and copper smiths.',
-        image: 'https://images.unsplash.com/photo-1713106853722-00847d9ce1be?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1713106853722-00847d9ce1be?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -390,7 +390,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Qigu',
         stay: 'Silks Place Tainan',
         desc: 'Private drive to Jingzaijiao tile-paved salt fields and black-faced spoonbill lagoon.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -398,7 +398,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Tainan',
         stay: 'Return Transfer',
         desc: 'Custom leather and bamboo crafting workshop; express HSR back to Taipei.',
-        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1734085778642-1a11db67d307?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -412,7 +412,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Nature & Peaks',
     tier: 'Ultra-Luxe Bespoke',
     priceEstimate: '$3,200',
-    heroImage: 'https://images.unsplash.com/flagged/photo-1556947890-0e997b0c9ef2?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://images.unsplash.com/flagged/photo-1556947890-0e997b0c9ef2?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Wellness Sanctuary',
     summary: 'Submerge into volcanic healing springs just 30 minutes outside Taipei. Stay at intimate onsen villas where natural white and green sulfur waters flow straight from geothermal springs.',
     routeStops: ['Beitou', 'Yangmingshan National Park', 'Jinshan'],
@@ -429,7 +429,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Beitou',
         stay: 'Villa 32',
         desc: 'Check into private thermal villa; historic walk through the 1905 Japanese public baths.',
-        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -437,7 +437,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Yangmingshan',
         stay: 'Villa 32',
         desc: 'Guided trek through volcanic vents, wild geothermal creeks, and tea pastures.',
-        image: 'https://plus.unsplash.com/premium_photo-1664804190504-805fb3666dce?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1664804190504-805fb3666dce?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -445,7 +445,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'North Coast',
         stay: 'Grand View Resort Beitou',
         desc: 'Oceanfront thermal bath and sculpture park stroll at Juming Museum.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -453,7 +453,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Beitou / Taipei',
         stay: 'Return Transfer',
         desc: 'Signature hot stone aromatherapy treatment and luxury departure transfer.',
-        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -467,7 +467,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Nature & Peaks',
     tier: 'Ultra-Luxe Bespoke',
     priceEstimate: '$2,700',
-    heroImage: '/images/sun-moon-lake.jpg',
+    heroImage: '/images/sun-moon-lake.webp',
     badge: 'Zen Retreat',
     summary: 'Experience Taiwan’s most iconic alpine lake through the minimalist architectural lens of The Lalu. Private boat charters and authentic encounters with the indigenous Thao people.',
     routeStops: ['Sun Moon Lake', 'Xiangshan', 'Ita Thao'],
@@ -484,7 +484,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Sun Moon Lake',
         stay: 'The Lalu',
         desc: 'Arrival at Kerry Hill’s architectural triumph; 60m mirror pool sunset cocktail.',
-        image: '/images/the-lalu-sanctuary.png'
+        image: '/images/the-lalu-sanctuary.webp'
       },
       {
         day: 2,
@@ -492,7 +492,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Sun Moon Lake',
         stay: 'The Lalu',
         desc: 'Silent dawn rowing boat excursion, temple bell meditation at Xuanzang Pagoda.',
-        image: 'https://plus.unsplash.com/premium_photo-1722206861426-9f8eb27b7b3c?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1722206861426-9f8eb27b7b3c?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -500,7 +500,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Nantou',
         stay: 'Return Transfer',
         desc: 'Tasting award-winning Geisha coffee grown on misty mountain slopes before private transfer.',
-        image: '/images/songyue-coffee-manor.png'
+        image: '/images/songyue-coffee-manor.webp'
       }
     ]
   },
@@ -514,7 +514,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Coastal & Sea',
     tier: 'Private Signature',
     priceEstimate: '$4,900',
-    heroImage: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Untamed Pacific',
     summary: 'Travel Taiwan’s wild eastern edge where the Pacific surf crashes against towering mountains. Live music in coastal caves, driftwood sculpture, and farm-to-table seafood.',
     routeStops: ['Hualien', 'Shitiping', 'Dulan', 'Taitung'],
@@ -531,7 +531,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Hualien',
         stay: 'Hualien Ocean Villa',
         desc: 'Scenic rail to the east; sunset drive along dramatic Highway 11.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -539,7 +539,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Fengbin',
         stay: 'Adagio Shitiping',
         desc: 'Exploring marine life in step-like rock formations; spearfish dining under stars.',
-        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1768473365585-9936ae9b105c?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -547,7 +547,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Dulan',
         stay: 'Dulan Clifftop Lodge',
         desc: 'Private studio tours with indigenous woodcarvers and painters.',
-        image: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -555,7 +555,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'East Rift Valley',
         stay: 'Papago International Resort',
         desc: 'Cycling the scenic Mr. Brown Avenue through boundless emerald and golden paddies.',
-        image: 'https://images.unsplash.com/photo-1535898331935-2d274aff0fbc?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1535898331935-2d274aff0fbc?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 5,
@@ -563,7 +563,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taitung',
         stay: 'Hotel Royal Chihpen',
         desc: 'Wild edible greens foraging with tribal elders along mountain streams.',
-        image: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1576332946878-20324ed6e6c8?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 6,
@@ -571,7 +571,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taitung',
         stay: 'Hotel Royal Chihpen',
         desc: 'Deep canyon mineral soaking and evening outdoor orchestral performance.',
-        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1688417352550-ce845b2c47cc?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 7,
@@ -579,7 +579,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taitung / Kaohsiung',
         stay: 'Return Transfer',
         desc: 'Scenic southern railway journey into Kaohsiung and HSR connection to Taipei.',
-        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -593,7 +593,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Coastal & Sea',
     tier: 'Private Signature',
     priceEstimate: '$3,100',
-    heroImage: 'https://images.unsplash.com/photo-1707968900308-5a5f30dbb552?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://images.unsplash.com/photo-1707968900308-5a5f30dbb552?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Tropical Lux',
     summary: 'The sun-drenched tropical escape of southern Taiwan. Turquoise waters, pristine reefs, Eluanbi lighthouse, and private yacht charters across the Bashi Channel.',
     routeStops: ['Kaohsiung', 'Kenting', 'Eluanbi'],
@@ -610,7 +610,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Kenting',
         stay: 'Gloria Manor Kenting',
         desc: 'Chauffeur transfer from Kaohsiung; check into former presidential summer residence.',
-        image: 'https://images.unsplash.com/photo-1678197434806-a275ec32ff40?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1678197434806-a275ec32ff40?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -618,7 +618,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'South Bay',
         stay: 'Gloria Manor Kenting',
         desc: 'Private PADI-certified dive master guided tour among sea turtles and clownfish.',
-        image: 'https://plus.unsplash.com/premium_photo-1669075651662-d275612673db?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1669075651662-d275612673db?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -626,7 +626,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Eluanbi',
         stay: 'Gloria Manor Kenting',
         desc: 'Limestone caves, coastal cliffs, and sunset cocktails at Eluanbi lighthouse.',
-        image: 'https://images.unsplash.com/photo-1678197434806-a275ec32ff40?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1678197434806-a275ec32ff40?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -634,7 +634,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Kaohsiung',
         stay: 'Return Transfer',
         desc: 'Fresh seafood brunch at Houbihu port; transfer to Kaohsiung HSR.',
-        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1724314652701-2e9de1099eba?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   },
@@ -648,7 +648,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
     category: 'Heritage',
     tier: 'Connoisseur Edition',
     priceEstimate: '$2,900',
-    heroImage: 'https://images.unsplash.com/photo-1782112592357-71dd904cc1d8?q=80&w=1200&auto=format&fit=crop',
+    heroImage: 'https://images.unsplash.com/photo-1782112592357-71dd904cc1d8?q=80&w=600&q=75&auto=format&fit=crop',
     badge: 'Island Odyssey',
     summary: 'Fly to Taiwan’s outer frontier islands. Explore subterranean submarine tunnels blasted into granite, swallow-tailed Minnan brick mansions, and ancient basalt sea cliffs.',
     routeStops: ['Kinmen', 'Penghu', 'Zhaishan'],
@@ -665,7 +665,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Kinmen',
         stay: 'Heritage Courtyard Villa',
         desc: 'Short scenic flight from Taipei; walk through red-brick Shuitou clan settlement.',
-        image: 'https://plus.unsplash.com/premium_photo-1664047696173-b47af42abd63?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1664047696173-b47af42abd63?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 2,
@@ -673,7 +673,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Kinmen',
         stay: 'Heritage Courtyard Villa',
         desc: 'Private exploration of underground military bunkers and vintage Kaoliang liquor cellars.',
-        image: 'https://plus.unsplash.com/premium_photo-1722206861426-9f8eb27b7b3c?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1722206861426-9f8eb27b7b3c?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 3,
@@ -681,7 +681,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Penghu',
         stay: 'Four Points by Sheraton Penghu',
         desc: 'Island hop to towering basalt sea pillars and historical stone fish weirs.',
-        image: 'https://plus.unsplash.com/premium_photo-1661962797396-eb892ff249ca?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661962797396-eb892ff249ca?q=80&w=600&q=75&auto=format&fit=crop'
       },
       {
         day: 4,
@@ -689,7 +689,7 @@ export const TOP_10_ITINERARIES: Itinerary[] = [
         location: 'Taipei',
         stay: 'Return Transfer',
         desc: 'Artisanal brown sugar cake and sea peanut confectionary tasting; return flight.',
-        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=600&q=75&auto=format&fit=crop'
       }
     ]
   }
