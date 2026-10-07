@@ -1,0 +1,483 @@
+---
+import { TOP_10_ITINERARIES } from '../data/itineraries';
+---
+
+<section id="itineraries" class="relative bg-zinc-950 text-zinc-100">
+  <!-- Subtle ambient decorative grid -->
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20 pointer-events-none"></div>
+
+  <!-- Outer Pin / Scroll Track Container (360vh tall gives natural scroll progression across the 10 slides) -->
+  <div id="itinerary-runway-container" class="relative h-[360vh]">
+    
+    <!-- Sticky Viewport Window -->
+    <div id="itinerary-sticky-window" class="sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden px-4 sm:px-8 py-6 z-20">
+      
+      <!-- Top Runway Header / HUD Controls -->
+      <div class="relative z-30 max-w-7xl w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4 pt-2 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-950/40 text-amber-300 text-[11px] font-semibold uppercase tracking-widest mb-2 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>2026 Curated Traverse Runway</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-serif text-white tracking-tight">
+            Top 10 Itineraries in Taiwan
+          </h2>
+          <p class="text-zinc-400 text-xs sm:text-sm font-light mt-1 hidden sm:block">
+            Scroll down to glide through all 10 curated circuits, or use manual keys & quick-drawer for instant comparisons.
+          </p>
+        </div>
+
+        <!-- HUD Action Cluster -->
+        <div class="flex items-center gap-3">
+          <!-- Slide Counter -->
+          <div class="px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 text-xs font-mono text-zinc-300 flex items-center gap-1.5 backdrop-blur-md">
+            <span class="text-amber-400 font-semibold" id="runway-counter-current">01</span>
+            <span class="text-zinc-600">/</span>
+            <span class="text-zinc-500">10</span>
+          </div>
+
+          <!-- Prev/Next Snapper Buttons -->
+          <div class="flex items-center gap-1.5 bg-zinc-900/80 border border-white/10 rounded-full p-1 backdrop-blur-md">
+            <button
+              id="runway-prev-btn"
+              type="button"
+              aria-label="Previous Itinerary"
+              class="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              id="runway-next-btn"
+              type="button"
+              aria-label="Next Itinerary"
+              class="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Global Grid Modal Trigger (Crucial Safety Valve against Carousel Drop-Off) -->
+          <button
+            id="toggle-grid-drawer-btn"
+            type="button"
+            class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-amber-300 border border-amber-400/40 bg-amber-950/30 hover:bg-amber-400 hover:text-zinc-950 transition-all backdrop-blur-md flex items-center gap-2 shadow-lg shadow-amber-500/10"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+            <span>View All 10 as Grid</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN HORIZONTAL RUNWAY TRACK -->
+      <div class="relative w-full overflow-hidden flex-1 flex items-center z-10 my-auto">
+        <div 
+          id="itinerary-runway-track" 
+          class="flex gap-6 sm:gap-8 will-change-transform transition-transform duration-75 ease-out pl-4 sm:pl-12 pr-12 items-center"
+        >
+          {TOP_10_ITINERARIES.map((item) => (
+            <article 
+              class="itinerary-runway-card flex-shrink-0 w-[85vw] sm:w-[540px] lg:w-[620px] rounded-3xl glass-panel border border-white/10 hover:border-amber-400/50 bg-zinc-900/75 backdrop-blur-2xl p-5 sm:p-7 shadow-2xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between group select-none"
+              data-runway-index={item.rank}
+              data-title={item.title}
+              data-slug={item.slug}
+            >
+              <!-- Card Top Header -->
+              <div>
+                <div class="flex items-center justify-between gap-3 mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xl sm:text-2xl font-serif text-amber-400 font-bold">
+                      #{String(item.rank).padStart(2, '0')}
+                    </span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-white/5 border border-white/10 text-zinc-300">
+                      {item.category}
+                    </span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-amber-400/10 border border-amber-400/20 text-amber-300 hidden sm:inline-block">
+                      {item.badge}
+                    </span>
+                  </div>
+                  
+                  <div class="text-right">
+                    <span class="text-[11px] text-zinc-400">From</span>
+                    <span class="text-base font-serif text-amber-300 font-semibold ml-1">{item.priceEstimate}</span>
+                    <span class="text-[10px] text-zinc-500">/ guest</span>
+                  </div>
+                </div>
+
+                <!-- Title & Subtitle -->
+                <h3 class="text-lg sm:text-2xl font-serif text-white font-medium group-hover:text-amber-300 transition-colors mb-1 truncate">
+                  {item.title}
+                </h3>
+                <p class="text-xs text-zinc-400 font-light line-clamp-2 mb-4 leading-relaxed">
+                  {item.subtitle}
+                </p>
+
+                <!-- Hero Imagery with Parallax Shimmer -->
+                <div class="relative w-full h-44 sm:h-56 rounded-2xl overflow-hidden mb-4 bg-zinc-950">
+                  <img 
+                    src={item.heroImage} 
+                    alt={item.title}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/25 to-transparent"></div>
+                  
+                  <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs">
+                    <span class="font-medium text-white/95 drop-shadow">
+                      {item.duration} Days Bespoke Exploration
+                    </span>
+                    <span class="text-[10px] uppercase tracking-wider text-amber-300 bg-zinc-950/80 px-2.5 py-1 rounded-full border border-amber-400/30 backdrop-blur-md">
+                      {item.tier}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Stops Path Badge Strip -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 mb-4 text-[11px] text-zinc-300">
+                  <span class="text-[9px] uppercase tracking-widest text-zinc-500 font-semibold mr-1">Circuit:</span>
+                  {item.routeStops.map((stop, sIdx) => (
+                    <span class="flex items-center gap-1 shrink-0">
+                      <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-zinc-300 text-[10px]">
+                        {stop}
+                      </span>
+                      {sIdx < item.routeStops.length - 1 && (
+                        <span class="text-amber-400/60 text-[10px]">→</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+
+                <!-- Key Highlights Bullet List -->
+                <div class="space-y-1.5 mb-2">
+                  <span class="text-[10px] uppercase tracking-widest text-zinc-400 block font-semibold">Signature Curations:</span>
+                  <ul class="space-y-1 text-xs text-zinc-300">
+                    {item.highlights.slice(0, 2).map((hl) => (
+                      <li class="flex items-start gap-2 line-clamp-1">
+                        <span class="text-amber-400 mt-0.5">✦</span>
+                        <span class="leading-relaxed">{hl}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card Action Row -->
+              <div class="flex items-center justify-between gap-3 pt-4 border-t border-white/10 mt-3">
+                <a 
+                  href={`/itineraries/${item.slug}`}
+                  class="inline-flex items-center gap-1 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors"
+                >
+                  <span>Detailed Dossier</span>
+                  <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+
+                <a 
+                  href="#concierge-wizard"
+                  data-select-itinerary={item.title}
+                  class="px-4 py-2 rounded-full text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 transition-all shadow-md hover:scale-105 active:scale-95"
+                >
+                  Inquire on Circuit
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <!-- BOTTOM SCRUBBER & MINI-STEPPER HUD -->
+      <div class="relative z-30 max-w-7xl w-full mx-auto pb-2 pt-3 flex flex-col gap-2">
+        <!-- Progress Track Line -->
+        <div class="w-full h-1.5 bg-zinc-900 border border-white/10 rounded-full overflow-hidden">
+          <div id="runway-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 w-[10%] rounded-full transition-all duration-100 ease-out"></div>
+        </div>
+
+        <!-- 10-Item Direct Scrub Dot Stepper -->
+        <div class="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar pt-1">
+          {TOP_10_ITINERARIES.map((item, idx) => (
+            <button
+              type="button"
+              data-step-index={idx}
+              class="runway-step-node flex-1 min-w-[28px] py-1.5 flex flex-col items-center gap-1 group focus:outline-none transition-all"
+              title={`Jump to #${item.rank} - ${item.title}`}
+            >
+              <div class="w-full h-1 rounded-full bg-zinc-800 group-hover:bg-amber-400/60 transition-colors step-line"></div>
+              <span class="text-[9px] font-mono text-zinc-500 group-hover:text-amber-300 step-label">
+                {String(item.rank).padStart(2, '0')}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL / GLOBAL GRID DRAWER (THE SAFETY VALVE) -->
+  <!-- Allows visitors to compare all 10 simultaneously without carousel friction -->
+  <!-- ======================================================== -->
+  <div 
+    id="itineraries-grid-modal" 
+    class="fixed inset-0 z-50 bg-zinc-950/90 backdrop-blur-2xl flex flex-col justify-between hidden opacity-0 transition-opacity duration-300"
+    role="dialog" 
+    aria-modal="true"
+    aria-labelledby="grid-modal-title"
+  >
+    <!-- Modal Header Bar -->
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex items-center justify-between border-b border-white/10">
+      <div>
+        <span class="text-xs font-semibold uppercase tracking-widest text-amber-400 block mb-1">Comparative Directory</span>
+        <h3 id="grid-modal-title" class="text-2xl sm:text-3xl font-serif text-white">
+          All 10 Curated Taiwan Circuits
+        </h3>
+      </div>
+      
+      <button 
+        id="close-grid-drawer-btn" 
+        type="button" 
+        class="px-4 py-2 rounded-full border border-white/20 bg-zinc-900 text-zinc-300 hover:text-white hover:border-amber-400 transition-all text-xs font-semibold uppercase tracking-wider flex items-center gap-2"
+      >
+        <span>Close Grid (ESC)</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable 10-Item Grid -->
+    <div class="flex-1 overflow-y-auto px-4 sm:px-8 py-8 max-w-7xl w-full mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {TOP_10_ITINERARIES.map((item) => (
+          <div class="glass-panel rounded-2xl p-5 border border-white/10 hover:border-amber-400/50 bg-zinc-900/60 transition-all flex flex-col justify-between">
+            <div>
+              <div class="relative w-full h-36 rounded-xl overflow-hidden mb-3">
+                <img src={item.heroImage} alt={item.title} class="w-full h-full object-cover brightness-90" />
+                <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-zinc-950/80 text-amber-400 border border-amber-400/30">
+                  #{String(item.rank).padStart(2, '0')}
+                </span>
+                <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-medium bg-zinc-950/80 text-white">
+                  {item.duration} Days
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between text-xs mb-1">
+                <span class="text-zinc-400 text-[10px] uppercase font-semibold">{item.category}</span>
+                <span class="text-amber-300 font-serif font-bold">{item.priceEstimate}</span>
+              </div>
+              <h4 class="text-base font-serif text-white font-medium mb-1 truncate">{item.title}</h4>
+              <p class="text-xs text-zinc-400 line-clamp-2 font-light mb-3">{item.summary}</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-white/10 text-xs">
+              <a href={`/itineraries/${item.slug}`} class="text-amber-300 hover:underline">
+                View Dossier →
+              </a>
+              <button 
+                type="button" 
+                data-jump-runway-index={item.rank - 1} 
+                class="px-3 py-1 rounded-full bg-white/10 hover:bg-amber-400 hover:text-zinc-950 text-white transition-colors text-[11px]"
+              >
+                Jump in Runway
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RUNWAY CONTROLLER & SCROLL SYNCHRONIZATION -->
+<script>
+  import { animate, createScope } from 'animejs';
+
+  document.addEventListener('astro:page-load', () => {
+    const container = document.getElementById('itinerary-runway-container');
+    const track = document.getElementById('itinerary-runway-track');
+    const progressBar = document.getElementById('runway-progress-bar');
+    const counterCurrent = document.getElementById('runway-counter-current');
+    const prevBtn = document.getElementById('runway-prev-btn') as HTMLButtonElement;
+    const nextBtn = document.getElementById('runway-next-btn') as HTMLButtonElement;
+    const stepNodes = document.querySelectorAll('.runway-step-node');
+    
+    // Grid modal controls
+    const toggleGridBtn = document.getElementById('toggle-grid-drawer-btn');
+    const closeGridBtn = document.getElementById('close-grid-drawer-btn');
+    const gridModal = document.getElementById('itineraries-grid-modal');
+    const jumpButtons = document.querySelectorAll('[data-jump-runway-index]');
+
+    if (!container || !track) return;
+
+    const cards = track.querySelectorAll('.itinerary-runway-card');
+    const totalCards = cards.length;
+    let currentSlide = 0;
+    let isTicking = false;
+
+    // Calculate maximum horizontal travel distance
+    function getMaxTranslate(): number {
+      if (!track || !track.parentElement) return 0;
+      const trackWidth = track.scrollWidth;
+      const parentWidth = track.parentElement.clientWidth;
+      return Math.max(0, trackWidth - parentWidth + 48);
+    }
+
+    // Update UI Indicators (Progress bar, counter, stepper dots)
+    function updateHUD(progressRatio: number, slideIndex: number) {
+      if (progressBar) {
+        progressBar.style.width = `${Math.min(100, Math.max(10, progressRatio * 100))}%`;
+      }
+      if (counterCurrent) {
+        counterCurrent.textContent = String(slideIndex + 1).padStart(2, '0');
+      }
+      if (prevBtn) prevBtn.disabled = slideIndex <= 0;
+      if (nextBtn) nextBtn.disabled = slideIndex >= totalCards - 1;
+
+      stepNodes.forEach((node, idx) => {
+        const line = node.querySelector('.step-line');
+        const label = node.querySelector('.step-label');
+        if (idx === slideIndex) {
+          line?.classList.add('bg-amber-400');
+          line?.classList.remove('bg-zinc-800');
+          label?.classList.add('text-amber-300', 'font-semibold');
+          label?.classList.remove('text-zinc-500');
+        } else if (idx < slideIndex) {
+          line?.classList.add('bg-amber-400/40');
+          line?.classList.remove('bg-zinc-800', 'bg-amber-400');
+          label?.classList.remove('text-amber-300', 'font-semibold');
+          label?.classList.add('text-zinc-500');
+        } else {
+          line?.classList.remove('bg-amber-400', 'bg-amber-400/40');
+          line?.classList.add('bg-zinc-800');
+          label?.classList.remove('text-amber-300', 'font-semibold');
+          label?.classList.add('text-zinc-500');
+        }
+      });
+    }
+
+    // Scroll-jacking sync loop
+    function onScroll() {
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          const rect = container!.getBoundingClientRect();
+          const totalScrollHeight = container!.clientHeight - window.innerHeight;
+          
+          if (totalScrollHeight <= 0) {
+            isTicking = false;
+            return;
+          }
+
+          // Calculate normalized progress (0 to 1) while inside the runway container
+          const scrolledPastTop = -rect.top;
+          let progress = scrolledPastTop / totalScrollHeight;
+          progress = Math.max(0, Math.min(1, progress));
+
+          // Interpolate horizontal offset
+          const maxTranslate = getMaxTranslate();
+          const currentTranslate = progress * maxTranslate;
+          track!.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
+
+          // Derive active slide index
+          const activeIndex = Math.min(totalCards - 1, Math.floor(progress * totalCards));
+          currentSlide = activeIndex;
+          updateHUD(progress, activeIndex);
+
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    // Initial sync
+    onScroll();
+
+    // Scroll window smoothly to specific slide index
+    function scrollToSlide(index: number) {
+      const clamped = Math.max(0, Math.min(totalCards - 1, index));
+      const targetProgress = clamped / (totalCards - 1);
+      const totalScrollHeight = container!.clientHeight - window.innerHeight;
+      const targetScrollTop = container!.offsetTop + (targetProgress * totalScrollHeight);
+
+      window.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
+    }
+
+    // Manual navigation buttons
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => scrollToSlide(currentSlide - 1));
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => scrollToSlide(currentSlide + 1));
+    }
+
+    // Direct Stepper Click
+    stepNodes.forEach((node) => {
+      node.addEventListener('click', () => {
+        const idx = parseInt(node.getAttribute('data-step-index') || '0', 10);
+        scrollToSlide(idx);
+      });
+    });
+
+    // Modal Grid Drawer Open/Close Logic
+    function openModal() {
+      if (!gridModal) return;
+      gridModal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        gridModal.classList.remove('opacity-0');
+        gridModal.classList.add('opacity-100');
+      });
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!gridModal) return;
+      gridModal.classList.remove('opacity-100');
+      gridModal.classList.add('opacity-0');
+      setTimeout(() => {
+        gridModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 250);
+    }
+
+    if (toggleGridBtn) toggleGridBtn.addEventListener('click', openModal);
+    if (closeGridBtn) closeGridBtn.addEventListener('click', closeModal);
+
+    // Escape key listener for modal
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && gridModal && !gridModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Jump from Grid to Runway
+    jumpButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetIdx = parseInt(btn.getAttribute('data-jump-runway-index') || '0', 10);
+        closeModal();
+        setTimeout(() => {
+          scrollToSlide(targetIdx);
+        }, 300);
+      });
+    });
+
+    // Preselect itinerary handler when clicking "Inquire on Circuit"
+    document.querySelectorAll('[data-select-itinerary]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const itineraryName = (e.currentTarget as HTMLElement).getAttribute('data-select-itinerary');
+        if (itineraryName) {
+          window.dispatchEvent(new CustomEvent('tw:preselect-itinerary', { detail: { name: itineraryName } }));
+        }
+      });
+    });
+  });
+</script>

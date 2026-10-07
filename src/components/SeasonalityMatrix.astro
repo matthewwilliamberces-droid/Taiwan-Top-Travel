@@ -1,0 +1,153 @@
+﻿---
+import { SEASONALITY_DATA } from '../data/seasonality';
+---
+
+<section id="seasonality" class="py-24 relative overflow-hidden bg-zinc-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-950/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4">
+          <span>Island Micro-Climates</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-serif text-white mb-4">
+          Taiwan Seasonality & Rhythm Matrix
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
+          From high-altitude cherry blossoms in early spring to pristine autumn marble canyon treks, choose the exact tempo for your 2026 journey.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs text-zinc-400">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Spring
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 ml-2"></span> Summer
+        <span class="w-2.5 h-2.5 rounded-full bg-orange-400 ml-2"></span> Autumn
+        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 ml-2"></span> Winter
+      </div>
+    </div>
+
+    <!-- 12-Month Selector Strip -->
+    <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-8">
+      {SEASONALITY_DATA.map((item, idx) => (
+        <button
+          type="button"
+          data-month-index={idx}
+          class={`month-tab group p-3 rounded-2xl glass-panel text-center transition-all duration-300 hover:border-amber-400/60 focus:outline-none ${idx === 9 ? 'border-amber-400/80 bg-amber-950/40' : 'hover:scale-105'}`}
+        >
+          <span class="text-[10px] text-zinc-400 uppercase tracking-widest block font-mono">{item.month}</span>
+          <span class="text-xs sm:text-sm font-semibold text-white block mt-0.5 group-hover:text-amber-300">{item.name.slice(0, 3)}</span>
+          <span class="text-[9px] text-zinc-400 block mt-1">{item.avgTemp.split('â€“')[0]}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Spotlight Showcase Card for Active Month -->
+    <div id="month-spotlight-card" class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl bg-zinc-900/60 backdrop-blur-xl relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-8 space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span id="spotlight-badge" class="px-3 py-1 rounded-full text-xs font-semibold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 transition-colors duration-300">
+              Peak Season (Autumn)
+            </span>
+            <span id="spotlight-month" class="text-2xl sm:text-3xl font-serif text-white font-bold">
+              October
+            </span>
+            <span id="spotlight-temp" class="text-sm font-mono text-amber-300 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              22Â°C â€“ 28Â°C (71Â°F â€“ 82Â°F)
+            </span>
+          </div>
+
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Seasonal Spectacle</span>
+            <h3 id="spotlight-spectacle" class="text-xl sm:text-2xl font-serif text-amber-200 font-medium">
+              Taroko Gorge Clifftop Season & High Mountain Autumn Oolong Roast
+            </h3>
+          </div>
+
+          <p id="spotlight-desc" class="text-sm text-zinc-300 leading-relaxed font-light">
+            Optimal travel weather of the year; dry, sunny, and temperate across the central spine and east coast. The single best month to execute the complete island traverse.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Prime Regions</span>
+              <p id="spotlight-regions" class="text-xs font-semibold text-white">
+                All Regions: Island-wide Peak Season
+              </p>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Concierge Advisory</span>
+              <p id="spotlight-tips" class="text-xs text-zinc-300">
+                Book private helicopter and luxury suites 6 months in advance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col justify-center items-start lg:items-end p-6 rounded-2xl bg-zinc-950/70 border border-white/10">
+          <span class="text-[10px] uppercase tracking-widest text-zinc-400 mb-1">Recommended Circuit</span>
+          <h4 id="spotlight-itinerary-title" class="text-lg font-serif text-white font-semibold mb-2 lg:text-right">
+            The Grand Formosa Grand Tour
+          </h4>
+          <span class="text-xs text-amber-400 mb-6 font-mono">12 Days / Ultra-Luxe Bespoke</span>
+          <a 
+            id="spotlight-itinerary-link"
+            href="#itineraries" 
+            class="w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95"
+          >
+            Review Recommended Circuit
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { SEASONALITY_DATA } from '../data/seasonality';
+
+  document.addEventListener('astro:page-load', () => {
+    const tabs = document.querySelectorAll('.month-tab');
+    const badgeEl = document.getElementById('spotlight-badge');
+    const monthEl = document.getElementById('spotlight-month');
+    const tempEl = document.getElementById('spotlight-temp');
+    const spectacleEl = document.getElementById('spotlight-spectacle');
+    const descEl = document.getElementById('spotlight-desc');
+    const regionsEl = document.getElementById('spotlight-regions');
+    const tipsEl = document.getElementById('spotlight-tips');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('border-amber-400/80', 'bg-amber-950/40'));
+        tab.classList.add('border-amber-400/80', 'bg-amber-950/40');
+
+        const indexStr = tab.getAttribute('data-month-index');
+        if (indexStr !== null) {
+          const idx = parseInt(indexStr, 10);
+          const data = SEASONALITY_DATA[idx];
+          if (data) {
+            if (badgeEl) {
+              badgeEl.textContent = `${data.crowdLevel} Season (${data.season})`;
+              badgeEl.className = 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300';
+              if (data.season === 'Spring') badgeEl.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/30');
+              else if (data.season === 'Summer') badgeEl.classList.add('bg-amber-500/20', 'text-amber-300', 'border-amber-500/30');
+              else if (data.season === 'Autumn') badgeEl.classList.add('bg-orange-500/20', 'text-orange-300', 'border-orange-500/30');
+              else if (data.season === 'Winter') badgeEl.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/30');
+            }
+            if (monthEl) monthEl.textContent = `${data.name}`;
+            if (tempEl) tempEl.textContent = `${data.avgTemp}`;
+            if (spectacleEl) spectacleEl.textContent = `${data.spectacle}`;
+            if (descEl) descEl.textContent = `${data.weatherDesc}`;
+            if (regionsEl) regionsEl.textContent = data.bestRegions.join(', ');
+            if (tipsEl) tipsEl.textContent = `${data.tips}`;
+          }
+        }
+      });
+    });
+  });
+</script>
+

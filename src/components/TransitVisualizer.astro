@@ -1,0 +1,172 @@
+---
+import { TRANSIT_HUBS } from '../data/transit';
+---
+
+<section id="transit" class="py-24 relative overflow-hidden bg-zinc-950 border-t border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-950/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4">
+        <span>300 km/h Island Spine</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-serif text-white mb-4">
+        The High-Speed Rail & Scenic Transit Visualizer
+      </h2>
+      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
+        Taiwan’s engineering marvel shrinks the 350km island corridor into minutes. Experience seamless Japanese Shinkansen 700T technology linking UNESCO-nominated cloud forests to ancient southern capitals.
+      </p>
+    </div>
+
+    <!-- Interactive Transit Dashboard -->
+    <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl bg-zinc-900/50 backdrop-blur-xl mb-12">
+      
+      <!-- Top Telemetry Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-6 pb-6 border-b border-white/10 mb-8">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Cruising Velocity</span>
+            <span class="text-xl sm:text-2xl font-serif text-white font-bold tracking-tight">300 km/h <span class="text-xs text-amber-400 font-sans font-normal">(186 mph)</span></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs text-zinc-300">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Rolling Stock</span>
+            <span class="font-semibold text-white">Taiwan Shinkansen 700T</span>
+          </div>
+          <div class="border-l border-white/10 pl-6">
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Punctuality Rate</span>
+            <span class="font-semibold text-emerald-400">99.88% On-Time</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station Node Timeline Track -->
+      <div class="mb-10">
+        <div class="flex items-center justify-between text-[11px] text-zinc-400 uppercase tracking-widest mb-3">
+          <span>Taipei Central</span>
+          <span class="text-amber-400 font-semibold">Select Station Node</span>
+          <span>Kaohsiung Zuoying</span>
+        </div>
+
+        <!-- Track Line with Clickable Stations -->
+        <div class="relative py-4">
+          <div class="absolute top-1/2 left-0 right-0 h-1 bg-zinc-800 -translate-y-1/2 rounded-full"></div>
+          <div id="progress-bar-line" class="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 -translate-y-1/2 rounded-full transition-all duration-500 w-[20%]"></div>
+
+          <div class="relative flex justify-between items-center">
+            {TRANSIT_HUBS.map((hub, index) => (
+              <button 
+                type="button"
+                data-station-index={index}
+                class={`station-node group flex flex-col items-center focus:outline-none transition-transform hover:scale-110 ${index === 0 ? 'active' : ''}`}
+              >
+                <div class="w-6 h-6 rounded-full border-2 border-zinc-700 bg-zinc-950 flex items-center justify-center group-hover:border-amber-400 transition-colors node-circle">
+                  <div class="w-2.5 h-2.5 rounded-full bg-zinc-600 group-hover:bg-amber-400 transition-colors node-dot"></div>
+                </div>
+                <span class="text-xs font-medium text-zinc-300 mt-2 text-center group-hover:text-amber-300 transition-colors node-label">
+                  {hub.chinese}
+                </span>
+                <span class="text-[10px] text-zinc-400 node-time">
+                  {hub.timeFromTaipei}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Station Detail Card -->
+      <div id="station-detail-card" class="p-6 rounded-2xl bg-zinc-950/70 border border-white/10 transition-all duration-300">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-4 border-b border-white/5">
+          <div>
+            <div class="flex items-center gap-3">
+              <h3 id="station-detail-title" class="text-xl sm:text-2xl font-serif text-white font-semibold">
+                Taipei Main Central (台北車站)
+              </h3>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase bg-amber-400/10 text-amber-300 border border-amber-400/20">
+                Origin Hub
+              </span>
+            </div>
+            <p id="station-detail-time" class="text-xs text-amber-400 mt-1 font-mono">
+              Travel Time: Origin Point (0 mins)
+            </p>
+          </div>
+
+          <div class="text-left md:text-right">
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Class Allocation</span>
+            <span class="text-xs text-zinc-300">VIP Business Car (Car 6) Reserved Seating</span>
+          </div>
+        </div>
+
+        <p id="station-detail-desc" class="text-sm text-zinc-300 leading-relaxed font-light mb-4">
+          The island’s subterranean transportation epicenter linking bullet trains, metro lines, and private airport expresses.
+        </p>
+
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-2 font-semibold">Luxury Excursions & Connecting Spurs:</span>
+          <div id="station-detail-connections" class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">Taoyuan Airport Express</span>
+            <span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">Beitou MRT Hot Springs</span>
+            <span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">Pingxi Heritage Line</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { TRANSIT_HUBS } from '../data/transit';
+
+  document.addEventListener('astro:page-load', () => {
+    const nodes = document.querySelectorAll('.station-node');
+    const progressBar = document.getElementById('progress-bar-line');
+    const titleEl = document.getElementById('station-detail-title');
+    const timeEl = document.getElementById('station-detail-time');
+    const descEl = document.getElementById('station-detail-desc');
+    const connectionsEl = document.getElementById('station-detail-connections');
+
+    nodes.forEach((node) => {
+      node.addEventListener('click', () => {
+        // Reset active styling
+        nodes.forEach(n => {
+          n.querySelector('.node-circle')?.classList.remove('border-amber-400', 'bg-amber-400/20');
+          n.querySelector('.node-dot')?.classList.remove('bg-amber-400');
+        });
+
+        // Set active styling on clicked
+        node.querySelector('.node-circle')?.classList.add('border-amber-400', 'bg-amber-400/20');
+        node.querySelector('.node-dot')?.classList.add('bg-amber-400');
+
+        const index = parseInt(node.getAttribute('data-station-index') || '0', 10);
+        
+        // Update progress bar
+        const pct = (index / (nodes.length - 1)) * 100;
+        if (progressBar) progressBar.style.width = `${pct}%`;
+
+        // Update detail card safely via memory reference
+        const hub = TRANSIT_HUBS[index];
+        if (hub) {
+          if (titleEl) titleEl.textContent = `${hub.name} (${hub.chinese})`;
+          if (timeEl) timeEl.textContent = `Travel Time: ${hub.timeFromTaipei}`;
+          if (descEl) descEl.textContent = hub.description || '';
+
+          if (connectionsEl) {
+            connectionsEl.innerHTML = hub.connections
+              .map((c: string) => `<span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">${c}</span>`)
+              .join('');
+          }
+        }
+      });
+    });
+  });
+</script>

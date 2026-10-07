@@ -1,0 +1,212 @@
+---
+---
+
+<section id="estimator" class="py-24 relative overflow-hidden bg-zinc-950 border-t border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-950/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4">
+        <span>Bespoke Calculator</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-serif text-white mb-4">
+        Interactive Trip Cost Estimator
+      </h2>
+      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed font-light">
+        Calculate your tailored travel investment for 2026. Adjust days, party size, and luxury tier to preview dynamic live pricing with seamless handoff to our concierge.
+      </p>
+    </div>
+
+    <!-- Estimator Control Card -->
+    <div class="max-w-4xl mx-auto glass-panel rounded-3xl p-6 sm:p-12 border border-white/10 shadow-2xl bg-zinc-900/60 backdrop-blur-xl">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        
+        <!-- Controls Column -->
+        <div class="md:col-span-7 space-y-8">
+          
+          <!-- Control 1: Duration Slider -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="duration-slider" class="text-xs uppercase tracking-wider text-zinc-300 font-medium">Journey Duration</label>
+              <span id="duration-val" class="text-sm font-serif font-bold text-amber-300">7 Days / 6 Nights</span>
+            </div>
+            <input 
+              type="range" 
+              id="duration-slider" 
+              min="3" 
+              max="14" 
+              value="7" 
+              class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
+            />
+            <div class="flex justify-between text-[10px] text-zinc-400 mt-1 font-mono">
+              <span>3 Days (Weekend Escapes)</span>
+              <span>14 Days (Full Formosa Traverse)</span>
+            </div>
+          </div>
+
+          <!-- Control 2: Party Size -->
+          <div>
+            <label class="text-xs uppercase tracking-wider text-zinc-300 font-medium block mb-3">Party Size</label>
+            <div class="grid grid-cols-4 gap-2">
+              <button type="button" data-party="1" class="party-btn p-2.5 rounded-xl text-xs font-medium border border-white/10 glass-panel hover:border-amber-400 text-zinc-300 focus:outline-none">Solo</button>
+              <button type="button" data-party="2" class="party-btn p-2.5 rounded-xl text-xs font-medium border border-amber-400/80 bg-amber-400/20 text-amber-300 focus:outline-none">Couple (2)</button>
+              <button type="button" data-party="4" class="party-btn p-2.5 rounded-xl text-xs font-medium border border-white/10 glass-panel hover:border-amber-400 text-zinc-300 focus:outline-none">Family (4)</button>
+              <button type="button" data-party="6" class="party-btn p-2.5 rounded-xl text-xs font-medium border border-white/10 glass-panel hover:border-amber-400 text-zinc-300 focus:outline-none">Group (6+)</button>
+            </div>
+          </div>
+
+          <!-- Control 3: Luxury Tier -->
+          <div>
+            <label class="text-xs uppercase tracking-wider text-zinc-300 font-medium block mb-3">Concierge Tier</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button 
+                type="button" 
+                id="tier-signature"
+                data-tier="signature" 
+                class="tier-btn p-3.5 rounded-xl border border-white/10 text-left glass-panel hover:border-amber-400 transition-all focus:outline-none"
+              >
+                <span class="text-xs font-semibold text-white block">Private Signature</span>
+                <span class="text-[10px] text-zinc-400 block mt-0.5">5★ Stays & Private Mercedes Vans</span>
+              </button>
+              <button 
+                type="button" 
+                id="tier-ultra"
+                data-tier="ultra" 
+                class="tier-btn p-3.5 rounded-xl border border-amber-400/80 bg-amber-400/20 text-left transition-all focus:outline-none"
+              >
+                <span class="text-xs font-semibold text-amber-300 block">Ultra-Luxe Bespoke</span>
+                <span class="text-[10px] text-amber-200/70 block mt-0.5">Villas, Maybach & Helicopter Hops</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Output / Live Price Ticker Column -->
+        <div class="md:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 rounded-2xl bg-zinc-950/80 border border-white/10 text-center">
+          <span class="text-[10px] uppercase tracking-widest text-zinc-400 mb-1">Estimated Investment</span>
+          
+          <div class="my-4">
+            <span id="price-counter" class="text-3xl sm:text-5xl font-serif text-amber-300 font-bold" data-current-val="5600">
+              $5,600
+            </span>
+            <span class="text-xs text-zinc-400 block mt-1">Total Estimated Starting Fare</span>
+          </div>
+
+          <div class="w-full space-y-2 py-4 border-t border-b border-white/10 text-xs text-zinc-300 text-left mb-6">
+            <div class="flex justify-between">
+              <span class="text-zinc-400">Selected Days:</span>
+              <span id="summary-days" class="font-medium text-white">7 Days</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-zinc-400">Party Size:</span>
+              <span id="summary-party" class="font-medium text-white">2 Guests</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-zinc-400">Escort Tier:</span>
+              <span id="summary-tier" class="font-medium text-amber-400">Ultra-Luxe Bespoke</span>
+            </div>
+          </div>
+
+          <a 
+            id="transfer-to-wizard-btn"
+            href="#concierge-wizard" 
+            class="w-full py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 hover:from-amber-300 hover:to-amber-400 transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+          >
+            <span>Lock Estimate & Inquire</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { animateCounter } from '../scripts/animations';
+
+  document.addEventListener('astro:page-load', () => {
+    const slider = document.getElementById('duration-slider') as HTMLInputElement;
+    const durationVal = document.getElementById('duration-val');
+    const priceCounter = document.getElementById('price-counter');
+    const summaryDays = document.getElementById('summary-days');
+    const summaryParty = document.getElementById('summary-party');
+    const summaryTier = document.getElementById('summary-tier');
+    const partyBtns = document.querySelectorAll('.party-btn');
+    const tierBtns = document.querySelectorAll('.tier-btn');
+    const transferBtn = document.getElementById('transfer-to-wizard-btn');
+
+    let currentDays = 7;
+    let currentParty = 2;
+    let currentTierRate = 400; // Ultra-Luxe base per person per day
+
+    function updatePrice() {
+      // Base math: (days * dailyRate * partyFactor) with bulk efficiencies
+      const dailyPerPerson = currentTierRate;
+      const partyMultiplier = currentParty === 1 ? 1.5 : (currentParty * 0.85);
+      const total = Math.round(currentDays * dailyPerPerson * partyMultiplier);
+
+      if (priceCounter) {
+        animateCounter(priceCounter, total, '$');
+      }
+
+      if (summaryDays) summaryDays.textContent = `${currentDays} Days`;
+      if (summaryParty) summaryParty.textContent = `${currentParty} Guest${currentParty > 1 ? 's' : ''}`;
+      if (summaryTier) summaryTier.textContent = currentTierRate > 300 ? 'Ultra-Luxe Bespoke' : 'Private Signature';
+    }
+
+    if (slider) {
+      slider.addEventListener('input', () => {
+        currentDays = parseInt(slider.value, 10);
+        if (durationVal) durationVal.textContent = `${currentDays} Days / ${currentDays - 1} Nights`;
+        updatePrice();
+      });
+    }
+
+    partyBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        partyBtns.forEach(b => {
+          b.classList.remove('border-amber-400/80', 'bg-amber-400/20', 'text-amber-300');
+          b.classList.add('border-white/10', 'text-zinc-300');
+        });
+        btn.classList.add('border-amber-400/80', 'bg-amber-400/20', 'text-amber-300');
+        btn.classList.remove('border-white/10', 'text-zinc-300');
+
+        currentParty = parseInt(btn.getAttribute('data-party') || '2', 10);
+        updatePrice();
+      });
+    });
+
+    tierBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tierBtns.forEach(b => {
+          b.classList.remove('border-amber-400/80', 'bg-amber-400/20');
+          b.classList.add('border-white/10');
+          b.querySelector('span')?.classList.remove('text-amber-300');
+        });
+        btn.classList.add('border-amber-400/80', 'bg-amber-400/20');
+        btn.classList.remove('border-white/10');
+        btn.querySelector('span')?.classList.add('text-amber-300');
+
+        const tier = btn.getAttribute('data-tier');
+        currentTierRate = tier === 'ultra' ? 400 : 250;
+        updatePrice();
+      });
+    });
+
+    if (transferBtn) {
+      transferBtn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('tw:transfer-estimate', {
+          detail: {
+            days: currentDays,
+            party: currentParty,
+            tier: currentTierRate > 300 ? 'Ultra-Luxe Bespoke' : 'Private Signature'
+          }
+        }));
+      });
+    }
+  });
+</script>

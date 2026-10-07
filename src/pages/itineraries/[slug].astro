@@ -1,0 +1,246 @@
+---
+import '../../styles/global.css';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingHud from '../../components/FloatingHud.astro';
+import { TOP_10_ITINERARIES, type Itinerary } from '../../data/itineraries';
+import { ClientRouter } from 'astro:transitions';
+
+export function getStaticPaths() {
+  return TOP_10_ITINERARIES.map((item) => ({
+    params: { slug: item.slug },
+    props: { itinerary: item },
+  }));
+}
+
+interface Props {
+  itinerary: Itinerary;
+}
+
+const { itinerary } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{itinerary.title} — Taiwan Top Travel 2026</title>
+    <meta name="description" content={itinerary.summary} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <ClientRouter />
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-amber-400 selection:text-zinc-950">
+    <Navbar />
+
+    <main class="pt-28 pb-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Back Navigation -->
+        <a href="/#itineraries" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-300 transition-colors mb-8 group">
+          <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Return to All 2026 Circuits</span>
+        </a>
+
+        <!-- Hero Header Card -->
+        <div class="relative rounded-3xl overflow-hidden glass-panel border border-white/10 mb-12">
+          <div class="relative h-[380px] sm:h-[460px] w-full">
+            <img 
+              src={itinerary.heroImage} 
+              alt={itinerary.title}
+              class="w-full h-full object-cover filter brightness-75 contrast-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+
+            <div class="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase bg-amber-400 text-zinc-950">
+                  Circuit #{String(itinerary.rank).padStart(2, '0')}
+                </span>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase bg-white/10 backdrop-blur text-white border border-white/20">
+                  {itinerary.category}
+                </span>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase bg-amber-950/80 text-amber-300 border border-amber-400/30">
+                  {itinerary.tier}
+                </span>
+              </div>
+
+              <h1 class="text-3xl sm:text-5xl font-serif text-white font-medium mb-3">
+                {itinerary.title}
+              </h1>
+              <p class="text-sm sm:text-base text-zinc-300 max-w-2xl font-light">
+                {itinerary.subtitle}
+              </p>
+            </div>
+          </div>
+
+          <!-- Specs Strip -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-zinc-900/80 border-t border-white/10 text-xs">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Duration</span>
+              <span class="text-sm font-semibold text-white mt-0.5 block">{itinerary.duration} Days / {itinerary.duration - 1} Nights</span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Starting Fare</span>
+              <span class="text-sm font-serif font-bold text-amber-300 mt-0.5 block">{itinerary.priceEstimate} <span class="text-[10px] font-sans font-normal text-zinc-400">/ guest</span></span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Escort Style</span>
+              <span class="text-sm font-semibold text-white mt-0.5 block">Private Chauffeur & Rail</span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block">Booking Horizon</span>
+              <span class="text-sm font-semibold text-emerald-400 mt-0.5 block">2026 Guaranteed Escort</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary & Highlights -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
+          <div class="md:col-span-7 space-y-4">
+            <h2 class="text-2xl font-serif text-white">Circuit Overview</h2>
+            <p class="text-sm text-zinc-300 leading-relaxed font-light">
+              {itinerary.summary}
+            </p>
+            <div class="pt-2">
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-2 font-semibold">Route Corridors:</span>
+              <div class="flex flex-wrap gap-2">
+                {itinerary.routeStops.map(stop => (
+                  <span class="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-200">
+                    📍 {stop}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-5 p-6 rounded-2xl glass-panel border border-amber-400/20 bg-zinc-900/40">
+            <h3 class="text-xs uppercase tracking-widest text-amber-400 font-semibold mb-4">Curated Highlights</h3>
+            <ul class="space-y-3 text-xs text-zinc-300">
+              {itinerary.highlights.map(hl => (
+                <li class="flex items-start gap-2.5">
+                  <span class="text-amber-400 text-sm mt-0.5">✦</span>
+                  <span class="leading-relaxed">{hl}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Day-by-Day Timeline Breakdown -->
+        <div class="mb-16">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+            <div>
+              <span class="text-xs font-semibold uppercase tracking-widest text-amber-400 block mb-1">Detailed Itinerary Dossier</span>
+              <h2 class="text-2xl sm:text-4xl font-serif text-white">
+                Complete Day-by-Day Narrative
+              </h2>
+            </div>
+            <span class="text-xs text-zinc-400 font-mono">
+              {itinerary.duration} Days of Curated Formosa Living
+            </span>
+          </div>
+
+          <div class="space-y-8">
+            {itinerary.days.map((item) => (
+              <article class="p-6 sm:p-8 rounded-3xl glass-panel border border-white/10 hover:border-amber-400/40 transition-all duration-300 bg-zinc-900/60 backdrop-blur-xl group overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                  
+                  <!-- Left/Day Photo Showcase -->
+                  {item.image && (
+                    <div class="md:col-span-4 relative rounded-2xl overflow-hidden aspect-[4/3] bg-zinc-950 border border-white/10">
+                      <img 
+                        src={item.image} 
+                        alt={`${item.location} - ${item.title}`}
+                        loading="lazy"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
+                      />
+                      <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
+                      <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-zinc-950/80 text-amber-400 border border-amber-400/30 backdrop-blur-md">
+                        Day {String(item.day).padStart(2, '0')}
+                      </div>
+                      <div class="absolute bottom-2.5 left-3 right-3 text-[11px] text-zinc-300 font-medium truncate drop-shadow">
+                        📍 {item.location}
+                      </div>
+                    </div>
+                  )}
+
+                  <!-- Right Narrative Details -->
+                  <div class={item.image ? "md:col-span-8 flex flex-col justify-between" : "md:col-span-12"}>
+                    <div>
+                      <!-- Card Header Meta -->
+                      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-white/5">
+                        <div class="flex items-center gap-3">
+                          <span class="w-8 h-8 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-xs font-bold text-amber-300 font-mono shrink-0">
+                            {String(item.day).padStart(2, '0')}
+                          </span>
+                          <h3 class="text-lg sm:text-xl font-serif text-white font-medium group-hover:text-amber-300 transition-colors">
+                            {item.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <!-- Sub-meta: Stay & Location -->
+                      <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs mb-4 text-zinc-400">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
+                          <span class="text-zinc-500 text-[10px] uppercase font-semibold">Region:</span>
+                          <strong class="text-white font-medium">{item.location}</strong>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-400/10 border border-amber-400/20 text-amber-300">
+                          <span class="text-amber-400/70 text-[10px] uppercase font-semibold">Stay:</span>
+                          <strong class="font-medium">{item.stay}</strong>
+                        </span>
+                      </div>
+
+                      <!-- Description Narrative -->
+                      <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed font-light">
+                        {item.desc}
+                      </p>
+                    </div>
+
+                    <!-- Mini Curated Badge -->
+                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-zinc-500">
+                      <span>Private Escort • VIP Access Included</span>
+                      <span class="text-amber-400/80">✦ Signature Day Circuit</span>
+                    </div>
+                  </div>
+
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <!-- Inquire Call to Action Card -->
+        <div class="p-8 sm:p-12 rounded-3xl glass-panel border border-amber-400/30 bg-gradient-to-r from-amber-950/30 to-zinc-950 text-center">
+          <h2 class="text-2xl sm:text-4xl font-serif text-white mb-4">
+            Experience {itinerary.title} in 2026
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-300 max-w-xl mx-auto mb-8 font-light leading-relaxed">
+            Every itinerary is private and tailored to your group. Reserve your preferred dates, private driver, and luxury suites today.
+          </p>
+          <a 
+            href={`/#concierge-wizard`}
+            class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 hover:from-amber-300 hover:to-amber-400 shadow-xl transition-all hover:scale-105 active:scale-95"
+          >
+            <span>Inquire On This Private Circuit</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <Footer />
+    <FloatingHud />
+  </body>
+</html>

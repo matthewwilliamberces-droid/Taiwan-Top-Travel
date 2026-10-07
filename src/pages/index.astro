@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import HorizontalRunway from '../components/HorizontalRunway.astro';
+import TransitVisualizer from '../components/TransitVisualizer.astro';
+import SeasonalityMatrix from '../components/SeasonalityMatrix.astro';
+import TripEstimator from '../components/TripEstimator.astro';
+import ConciergeWizard from '../components/ConciergeWizard.astro';
+import Footer from '../components/Footer.astro';
+import FloatingHud from '../components/FloatingHud.astro';
+import { ClientRouter } from 'astro:transitions';
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO & Primary Meta -->
+    <title>Taiwan Top Travel — Bespoke Luxury Concierge & 2026 Circuits</title>
+    <meta name="description" content="Discover the Top 10 Itineraries in Taiwan for 2026. Private high-speed rail journeys, Alishan tea estates, Taroko marble canyons, and Michelin gastronomy." />
+    <meta property="og:title" content="Taiwan Top Travel — Bespoke Luxury Concierge" />
+    <meta property="og:description" content="Private luxury circuits across Formosa. 10 curated 2026 itineraries with interactive rail transit, seasonal matrices, and bespoke pricing estimator." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Typography: Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <ClientRouter />
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-amber-400 selection:text-zinc-950">
+    
+    <!-- Top Navigation Bar -->
+    <Navbar />
+
+    <main>
+      <!-- Hero Section with Ambient Video & Anime.js Reveals -->
+      <Hero />
+
+      <!-- Pinned Scroll-Driven Horizontal Runway with Safety-Valve Grid Drawer -->
+      <HorizontalRunway />
+
+      <!-- High-Speed Rail 300km/h Transit Visualizer -->
+      <TransitVisualizer />
+
+      <!-- Seasonality & Climate Rhythm Matrix -->
+      <SeasonalityMatrix />
+
+      <!-- Interactive Trip Cost & Style Estimator -->
+      <TripEstimator />
+
+      <!-- 4-Step Animated Concierge Wizard -->
+      <ConciergeWizard />
+    </main>
+
+    <!-- Editorial Footer -->
+    <Footer />
+
+    <!-- Floating Ergonomic HUD (Back to Top with Progress Ring & Concierge Trigger) -->
+    <FloatingHud />
+
+    <!-- Motion Orchestration -->
+    <script>
+      import { initHeroAnimation } from '../scripts/animations';
+
+      document.addEventListener('astro:page-load', () => {
+        initHeroAnimation('#hero-section');
+      });
+    </script>
+  </body>
+</html>

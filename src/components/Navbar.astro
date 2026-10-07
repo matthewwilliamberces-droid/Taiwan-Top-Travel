@@ -1,0 +1,139 @@
+---
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+    <div class="glass-panel rounded-full px-6 py-3.5 flex items-center justify-between shadow-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-xl">
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          <span class="text-zinc-950 font-serif font-black text-sm tracking-widest">TW</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold tracking-wider uppercase text-zinc-100 group-hover:text-amber-400 transition-colors">Taiwan Top Travel</span>
+          <span class="text-[10px] uppercase tracking-widest text-zinc-400">Bespoke Concierge 2026</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-medium tracking-wider uppercase text-zinc-300">
+        <a href="#itineraries" class="hover:text-amber-400 transition-colors">Top 10 Itineraries</a>
+        <a href="#transit" class="hover:text-amber-400 transition-colors">HSR Bullet Rail</a>
+        <a href="#seasonality" class="hover:text-amber-400 transition-colors">Seasonality Matrix</a>
+        <a href="#estimator" class="hover:text-amber-400 transition-colors">Cost Estimator</a>
+      </nav>
+
+      <!-- CTA Button & Mobile Hamburger Trigger -->
+      <div class="flex items-center gap-3">
+        <a 
+          href="#concierge-wizard" 
+          class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md shadow-amber-400/20 hover:scale-[1.02] active:scale-[0.98]"
+        >
+          <span>Plan Bespoke Trip</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Open Navigation Menu"
+          class="md:hidden w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:border-amber-400/40 transition-colors focus:outline-none"
+        >
+          <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+          <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Full-Screen Overlay Drawer -->
+  <div
+    id="mobile-nav-drawer"
+    class="fixed inset-0 top-[76px] z-40 bg-zinc-950/95 backdrop-blur-2xl border-t border-white/10 flex flex-col justify-between p-6 sm:p-8 md:hidden transition-all duration-300 opacity-0 pointer-events-none translate-y-2"
+  >
+    <div class="space-y-6 pt-4">
+      <span class="text-[10px] uppercase tracking-widest text-amber-400 font-semibold block">Navigation Directory</span>
+      <nav class="flex flex-col gap-4 text-base font-serif">
+        <a href="#itineraries" class="mobile-nav-link text-zinc-200 hover:text-amber-300 py-2 border-b border-white/5 flex items-center justify-between">
+          <span>Top 10 Curated Circuits</span>
+          <span class="text-xs font-sans text-amber-400/80 font-mono">01 - 10 →</span>
+        </a>
+        <a href="#transit" class="mobile-nav-link text-zinc-200 hover:text-amber-300 py-2 border-b border-white/5 flex items-center justify-between">
+          <span>High-Speed Rail Transit Visualizer</span>
+          <span class="text-xs font-sans text-zinc-500 font-mono">300 km/h →</span>
+        </a>
+        <a href="#seasonality" class="mobile-nav-link text-zinc-200 hover:text-amber-300 py-2 border-b border-white/5 flex items-center justify-between">
+          <span>Taiwan Seasonality & Rhythm Matrix</span>
+          <span class="text-xs font-sans text-zinc-500 font-mono">12 Months →</span>
+        </a>
+        <a href="#estimator" class="mobile-nav-link text-zinc-200 hover:text-amber-300 py-2 border-b border-white/5 flex items-center justify-between">
+          <span>Interactive Cost Estimator</span>
+          <span class="text-xs font-sans text-zinc-500 font-mono">Live Fares →</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="space-y-4 pt-6 border-t border-white/10">
+      <a
+        href="#concierge-wizard"
+        class="mobile-nav-link w-full py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 flex items-center justify-center gap-2 shadow-lg"
+      >
+        <span>Plan Your 2026 Bespoke Journey</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+      <p class="text-[11px] text-zinc-500 text-center font-light">
+        Private Concierge Escort • Response Guaranteed &lt; 24h
+      </p>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    let isOpen = false;
+
+    function toggleMenu(forceClose = false) {
+      if (forceClose) isOpen = false;
+      else isOpen = !isOpen;
+
+      if (!drawer || !iconOpen || !iconClose) return;
+
+      if (isOpen) {
+        drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+        drawer.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        iconOpen.classList.add('hidden');
+        iconClose.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        drawer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => toggleMenu());
+    }
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(true));
+    });
+  });
+</script>

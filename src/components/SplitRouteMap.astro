@@ -1,0 +1,322 @@
+---
+import { TOP_10_ITINERARIES } from '../data/itineraries';
+---
+
+<section id="itineraries" class="py-24 relative overflow-hidden bg-zinc-950">
+  <!-- Subtle background ambient grid -->
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- Section Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-950/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4">
+        <span>The 2026 Collection</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-serif text-white leading-tight mb-4">
+        Top 10 Itineraries in Taiwan
+      </h2>
+      <p class="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+        Hover or select any itinerary to watch the route dynamically trace across the island on our interactive cartography. Each journey is private, escorted, and fully customizable.
+      </p>
+    </div>
+
+    <!-- Split Screen Layout: Sticky Map Left, Scrolling Stream Right -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- LEFT COLUMN: Sticky Taiwan Cartography SVG (Desktop) -->
+      <div class="lg:col-span-5 sticky top-28 self-start">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative overflow-hidden bg-zinc-900/60 backdrop-blur-xl">
+          
+          <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400">Interactive Cartography</span>
+              <h3 id="active-map-title" class="text-base font-serif text-amber-300 font-semibold truncate max-w-[220px]">
+                The Grand Formosa Grand Tour
+              </h3>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400">Duration</span>
+              <div id="active-map-days" class="text-xs font-semibold text-white">12 Days / 11 Nights</div>
+            </div>
+          </div>
+
+          <!-- Taiwan Island Silhouette & Coordinate Map -->
+          <div class="relative w-full aspect-[3/4] flex items-center justify-center">
+            <svg 
+              id="taiwan-map-svg" 
+              viewBox="0 0 320 440" 
+              class="w-full h-full filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] select-none"
+            >
+              <!-- SVG Defs / Gradients -->
+              <defs>
+                <linearGradient id="islandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1f2937" stop-opacity="0.9"/>
+                  <stop offset="50%" stop-color="#111827" stop-opacity="0.95"/>
+                  <stop offset="100%" stop-color="#090d16" stop-opacity="0.9"/>
+                </linearGradient>
+                <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="50%" stop-color="#fbbf24"/>
+                  <stop offset="100%" stop-color="#fef08a"/>
+                </linearGradient>
+                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <!-- Island Contour (Stylized Formosa Island Geometry) -->
+              <path 
+                d="M 195 65 
+                   C 215 70, 235 90, 240 120 
+                   C 245 150, 240 190, 235 240 
+                   C 230 280, 210 330, 180 375 
+                   C 165 395, 150 410, 140 410 
+                   C 130 405, 120 375, 115 350 
+                   C 105 310, 100 270, 110 220 
+                   C 120 180, 140 130, 160 90 
+                   Z" 
+                fill="url(#islandGradient)" 
+                stroke="rgba(212, 175, 55, 0.3)" 
+                stroke-width="1.5"
+                class="transition-colors duration-500 hover:stroke-amber-400"
+              />
+
+              <!-- Topographic Mountain Ridge Backbone -->
+              <path 
+                d="M 195 105 Q 185 160 170 215 Q 160 265 150 330" 
+                fill="none" 
+                stroke="rgba(255, 255, 255, 0.08)" 
+                stroke-width="8" 
+                stroke-linecap="round"
+                stroke-dasharray="2 4"
+              />
+
+              <!-- Active Dynamic Route Trace Path (Animated via Anime.js) -->
+              <path 
+                id="active-route-trace" 
+                d="M 195 90 L 225 150 L 160 210 L 140 240 L 115 285 L 125 330" 
+                fill="none" 
+                stroke="url(#routeGradient)" 
+                stroke-width="3.5" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+                filter="url(#glow)"
+                class="transition-all duration-300"
+              />
+
+              <!-- Key Geographic Hub Nodes -->
+              <!-- Taipei -->
+              <g class="city-node" data-city="Taipei" transform="translate(195, 90)">
+                <circle r="7" fill="rgba(245, 158, 11, 0.3)" class="animate-ping" />
+                <circle r="4" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="10" y="4" fill="#f3f4f6" font-size="10" font-weight="600" font-family="sans-serif">Taipei</text>
+              </g>
+
+              <!-- Taroko / Hualien -->
+              <g class="city-node" data-city="Hualien" transform="translate(225, 150)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="8" y="3" fill="#9ca3af" font-size="9" font-family="sans-serif">Taroko</text>
+              </g>
+
+              <!-- Sun Moon Lake -->
+              <g class="city-node" data-city="Sun Moon Lake" transform="translate(160, 210)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="-65" y="3" fill="#9ca3af" font-size="9" font-family="sans-serif">Sun Moon Lake</text>
+              </g>
+
+              <!-- Alishan -->
+              <g class="city-node" data-city="Alishan" transform="translate(140, 240)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="-45" y="3" fill="#9ca3af" font-size="9" font-family="sans-serif">Alishan</text>
+              </g>
+
+              <!-- Tainan -->
+              <g class="city-node" data-city="Tainan" transform="translate(115, 285)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="-38" y="3" fill="#9ca3af" font-size="9" font-family="sans-serif">Tainan</text>
+              </g>
+
+              <!-- Kaohsiung -->
+              <g class="city-node" data-city="Kaohsiung" transform="translate(125, 330)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="-58" y="4" fill="#9ca3af" font-size="9" font-family="sans-serif">Kaohsiung</text>
+              </g>
+
+              <!-- Taitung -->
+              <g class="city-node" data-city="Taitung" transform="translate(200, 320)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="8" y="4" fill="#9ca3af" font-size="9" font-family="sans-serif">Taitung</text>
+              </g>
+
+              <!-- Kenting -->
+              <g class="city-node" data-city="Kenting" transform="translate(145, 395)">
+                <circle r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+                <text x="8" y="3" fill="#9ca3af" font-size="9" font-family="sans-serif">Kenting</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Active Route Stops Legend -->
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-2">Featured Stops</span>
+            <div id="active-map-stops" class="flex flex-wrap gap-1.5 text-xs">
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Taipei</span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Taroko</span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Sun Moon Lake</span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Alishan</span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Tainan</span>
+              <span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Kaohsiung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: The 10 Curated Itinerary Cards -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        {TOP_10_ITINERARIES.map((item) => (
+          <article 
+            class="itinerary-card glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-amber-400/50 transition-all duration-300 group cursor-pointer relative overflow-hidden"
+            data-itinerary-id={item.id}
+            data-route-path={item.svgRoutePath}
+            data-title={item.title}
+            data-days={`${item.duration} Days / ${item.duration - 1} Nights`}
+            data-stops={JSON.stringify(item.routeStops)}
+          >
+            <!-- Card Header Meta -->
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl font-serif text-amber-400/80 font-bold">
+                  #{String(item.rank).padStart(2, '0')}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-white/5 border border-white/10 text-zinc-300">
+                  {item.category}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-amber-400/10 border border-amber-400/20 text-amber-300">
+                  {item.badge}
+                </span>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-zinc-400">From</span>
+                <span class="text-base font-serif text-amber-300 font-semibold ml-1">{item.priceEstimate}</span>
+                <span class="text-[10px] text-zinc-400">/ guest</span>
+              </div>
+            </div>
+
+            <!-- Title & Subtitle -->
+            <h3 class="text-xl sm:text-2xl font-serif text-white font-medium group-hover:text-amber-300 transition-colors mb-2">
+              {item.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-zinc-300 font-light mb-4 leading-relaxed">
+              {item.subtitle}
+            </p>
+
+            <!-- Image preview banner -->
+            <div class="relative w-full h-48 rounded-2xl overflow-hidden mb-6">
+              <img 
+                src={item.heroImage} 
+                alt={item.title}
+                loading="lazy" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
+              <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                <span class="text-xs font-medium text-white/90 drop-shadow">
+                  {item.duration} Days Bespoke Exploration
+                </span>
+                <span class="text-[10px] uppercase tracking-wider text-amber-300 bg-zinc-950/80 px-2.5 py-1 rounded-full border border-amber-400/30">
+                  {item.tier}
+                </span>
+              </div>
+            </div>
+
+            <!-- Key Curated Highlights -->
+            <div class="space-y-2 mb-6">
+              <span class="text-[10px] uppercase tracking-widest text-zinc-400 block font-semibold">Signature Experiences:</span>
+              <ul class="space-y-1.5 text-xs text-zinc-300">
+                {item.highlights.slice(0, 3).map((hl) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-amber-400 mt-0.5">✦</span>
+                    <span class="leading-relaxed">{hl}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
+              <a 
+                href={`/itineraries/${item.slug}`}
+                class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors"
+              >
+                <span>Read Complete Day-by-Day Itinerary</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+
+              <a 
+                href={`#concierge-wizard`}
+                data-select-itinerary={item.title}
+                class="px-4 py-2 rounded-full text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 transition-all shadow hover:scale-105 active:scale-95"
+              >
+                Inquire on this Circuit
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  import { traceSvgRoute } from '../scripts/animations';
+
+  document.addEventListener('astro:page-load', () => {
+    const cards = document.querySelectorAll('.itinerary-card');
+    const routeTrace = document.getElementById('active-route-trace') as unknown as SVGPathElement;
+    const titleEl = document.getElementById('active-map-title');
+    const daysEl = document.getElementById('active-map-days');
+    const stopsEl = document.getElementById('active-map-stops');
+
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        const pathData = card.getAttribute('data-route-path');
+        const title = card.getAttribute('data-title');
+        const days = card.getAttribute('data-days');
+        const rawStops = card.getAttribute('data-stops');
+
+        if (pathData && routeTrace) {
+          routeTrace.setAttribute('d', pathData);
+          traceSvgRoute(routeTrace);
+        }
+
+        if (title && titleEl) titleEl.textContent = title;
+        if (days && daysEl) daysEl.textContent = days;
+
+        if (rawStops && stopsEl) {
+          try {
+            const stops: string[] = JSON.parse(rawStops);
+            stopsEl.innerHTML = stops
+              .map(s => `<span class="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">${s}</span>`)
+              .join('');
+          } catch (e) {
+            // fallback
+          }
+        }
+      });
+    });
+
+    // Wire up "Inquire on this Circuit" buttons to pre-select itinerary in Concierge Wizard
+    document.querySelectorAll('[data-select-itinerary]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const itineraryName = (e.currentTarget as HTMLElement).getAttribute('data-select-itinerary');
+        if (itineraryName) {
+          window.dispatchEvent(new CustomEvent('tw:preselect-itinerary', { detail: { name: itineraryName } }));
+        }
+      });
+    });
+  });
+</script>

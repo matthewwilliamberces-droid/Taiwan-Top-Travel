@@ -1,0 +1,113 @@
+---
+---
+
+<!-- Floating Ergonomic HUD Controls -->
+<aside 
+  id="floating-hud-controls" 
+  class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 transition-all duration-300 pointer-events-none opacity-0 translate-y-3"
+  aria-label="Quick Page Controls"
+>
+  <!-- Floating Direct Concierge Quick-Launch Trigger -->
+  <a
+    href="#concierge-wizard"
+    id="hud-inquire-btn"
+    class="pointer-events-auto group px-4 py-2.5 rounded-full glass-panel border border-amber-400/40 bg-zinc-950/80 backdrop-blur-xl hover:border-amber-400 text-xs font-semibold uppercase tracking-wider text-amber-300 hover:text-zinc-950 hover:bg-gradient-to-r hover:from-amber-400 hover:via-amber-300 hover:to-yellow-200 shadow-2xl shadow-amber-500/20 transition-all duration-300 flex items-center gap-2 hover:scale-105 active:scale-95"
+  >
+    <span class="w-2 h-2 rounded-full bg-amber-400 group-hover:bg-zinc-950 animate-ping"></span>
+    <span class="hidden sm:inline">Direct Concierge Brief</span>
+    <span class="sm:hidden">Inquire</span>
+    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+  </a>
+
+  <!-- Floating Back to Top Button with SVG Circular Progress Ring -->
+  <button
+    id="hud-back-to-top-btn"
+    type="button"
+    aria-label="Back to Top"
+    class="pointer-events-auto relative w-11 h-11 rounded-full glass-panel border border-white/10 bg-zinc-950/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-white hover:border-amber-400 transition-all duration-300 shadow-xl group hover:scale-105 active:scale-95"
+  >
+    <!-- Circular Scroll Progress Ring -->
+    <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 44 44">
+      <circle
+        cx="22"
+        cy="22"
+        r="18"
+        stroke="rgba(255, 255, 255, 0.1)"
+        stroke-width="2"
+        fill="none"
+      />
+      <circle
+        id="hud-progress-circle"
+        cx="22"
+        cy="22"
+        r="18"
+        stroke="#f59e0b"
+        stroke-width="2.5"
+        stroke-dasharray="113.1"
+        stroke-dashoffset="113.1"
+        stroke-linecap="round"
+        fill="none"
+        class="transition-all duration-100 ease-out"
+      />
+    </svg>
+
+    <!-- Up Arrow Icon -->
+    <svg class="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+</aside>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const hudContainer = document.getElementById('floating-hud-controls');
+    const backToTopBtn = document.getElementById('hud-back-to-top-btn');
+    const progressCircle = document.getElementById('hud-progress-circle');
+
+    if (!hudContainer || !progressCircle) return;
+
+    const circumference = 2 * Math.PI * 18; // approx 113.097
+    let isTicking = false;
+
+    function onWindowScroll() {
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+          if (scrollTop > 400) {
+            hudContainer?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+            hudContainer?.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+          } else {
+            hudContainer?.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            hudContainer?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+          }
+
+          if (docHeight > 0) {
+            const scrollFraction = Math.min(1, Math.max(0, scrollTop / docHeight));
+            const dashoffset = circumference - (scrollFraction * circumference);
+            progressCircle!.style.strokeDashoffset = `${dashoffset}`;
+          }
+
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
+    // Initial check
+    onWindowScroll();
+
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+  });
+</script>
