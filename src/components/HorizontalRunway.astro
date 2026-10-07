@@ -122,7 +122,10 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
                   <img 
                     src={item.heroImage} 
                     alt={item.title}
+                    width="620"
+                    height="224"
                     loading="lazy"
+                    decoding="async"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/25 to-transparent"></div>
@@ -206,6 +209,7 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
               data-step-index={idx}
               class="runway-step-node flex-1 min-w-[28px] py-1.5 flex flex-col items-center gap-1 group focus:outline-none transition-all"
               title={`Jump to #${item.rank} - ${item.title}`}
+              aria-label={`Jump to #${item.rank} - ${item.title}`}
             >
               <div class="w-full h-1 rounded-full bg-zinc-800 group-hover:bg-amber-400/60 transition-colors step-line"></div>
               <span class="text-[9px] font-mono text-zinc-500 group-hover:text-amber-300 step-label">
@@ -258,7 +262,15 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
           <div class="glass-panel rounded-2xl p-5 border border-white/10 hover:border-amber-400/50 bg-zinc-900/60 transition-all flex flex-col justify-between">
             <div>
               <div class="relative w-full h-36 rounded-xl overflow-hidden mb-3">
-                <img src={item.heroImage} alt={item.title} class="w-full h-full object-cover brightness-90" />
+                <img 
+                  src={item.heroImage} 
+                  alt={item.title} 
+                  width="320" 
+                  height="144" 
+                  loading="lazy" 
+                  decoding="async" 
+                  class="w-full h-full object-cover brightness-90" 
+                />
                 <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-zinc-950/80 text-amber-400 border border-amber-400/30">
                   #{String(item.rank).padStart(2, '0')}
                 </span>
@@ -320,12 +332,20 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
     let currentSlide = 0;
     let isTicking = false;
 
-    // Calculate maximum horizontal travel distance
-    function getMaxTranslate(): number {
-      if (!track || !track.parentElement) return 0;
+    // Cached layout geometry to eliminate forced reflows during scroll
+    let cachedContainerTop = 0;
+    let cachedTotalScrollHeight = 0;
+    let cachedMaxTranslate = 0;
+
+    function measureLayout() {
+      if (!container || !track || !track.parentElement) return;
+      const rect = container.getBoundingClientRect();
+      cachedContainerTop = rect.top + (window.scrollY || window.pageYOffset);
+      cachedTotalScrollHeight = Math.max(0, container.clientHeight - window.innerHeight);
+
       const trackWidth = track.scrollWidth;
       const parentWidth = track.parentElement.clientWidth;
-      return Math.max(0, trackWidth - parentWidth + 48);
+      cachedMaxTranslate = Math.max(0, trackWidth - parentWidth + 48);
     }
 
     // Update UI Indicators (Progress bar, counter, stepper dots)
@@ -361,32 +381,31 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
       });
     }
 
-    // Scroll-jacking sync loop
+    // Non-reflow scroll synchronization loop
     function onScroll() {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
-          const rect = container!.getBoundingClientRect();
-          const totalScrollHeight = container!.clientHeight - window.innerHeight;
-          
-          if (totalScrollHeight <= 0) {
+          if (cachedTotalScrollHeight <= 0) {
             isTicking = false;
             return;
           }
 
-          // Calculate normalized progress (0 to 1) while inside the runway container
-          const scrolledPastTop = -rect.top;
-          let progress = scrolledPastTop / totalScrollHeight;
+          const scrollY = window.scrollY || window.pageYOffset;
+          const scrolledPastTop = scrollY - cachedContainerTop;
+          let progress = scrolledPastTop / cachedTotalScrollHeight;
           progress = Math.max(0, Math.min(1, progress));
 
-          // Interpolate horizontal offset
-          const maxTranslate = getMaxTranslate();
-          const currentTranslate = progress * maxTranslate;
+          const currentTranslate = progress * cachedMaxTranslate;
           track!.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
 
           // Derive active slide index
           const activeIndex = Math.min(totalCards - 1, Math.floor(progress * totalCards));
-          currentSlide = activeIndex;
-          updateHUD(progress, activeIndex);
+          if (activeIndex !== currentSlide) {
+            currentSlide = activeIndex;
+            updateHUD(progress, activeIndex);
+          } else if (progressBar) {
+            progressBar.style.width = `${Math.min(100, Math.max(10, progress * 100))}%`;
+          }
 
           isTicking = false;
         });
@@ -394,17 +413,29 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
       }
     }
 
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+    function handleResize() {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        measureLayout();
+        onScroll();
+      }, 100);
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    // Initial sync
-    onScroll();
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Defer initial layout measurement until after initial paint to avoid blocking critical path
+    requestAnimationFrame(() => {
+      measureLayout();
+      onScroll();
+    });
 
     // Scroll window smoothly to specific slide index
     function scrollToSlide(index: number) {
       const clamped = Math.max(0, Math.min(totalCards - 1, index));
       const targetProgress = clamped / (totalCards - 1);
-      const totalScrollHeight = container!.clientHeight - window.innerHeight;
-      const targetScrollTop = container!.offsetTop + (targetProgress * totalScrollHeight);
+      const targetScrollTop = cachedContainerTop + (targetProgress * cachedTotalScrollHeight);
 
       window.scrollTo({
         top: targetScrollTop,
