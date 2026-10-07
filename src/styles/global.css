@@ -80,6 +80,17 @@ body {
   animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
 }
 
+/* Slow cinematic zoom on the hero photo (transform-only => compositor thread, no repaint/reflow) */
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.animate-hero-zoom {
+  animation: heroZoom 25s linear both;
+  will-change: transform;
+}
+
 /* Reduced Motion Safety */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -88,7 +99,7 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  [data-animate], [data-hero-word], .animate-hero-badge, .animate-hero-cta, .animate-hero-stats {
+  [data-animate], [data-hero-word], .animate-hero-badge, .animate-hero-cta, .animate-hero-stats, .animate-hero-zoom {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

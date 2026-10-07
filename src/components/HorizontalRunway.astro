@@ -381,10 +381,21 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
       });
     }
 
+    // Geometry is measured lazily on the FIRST scroll/interaction (never during load),
+    // so it cannot show up as a forced reflow in the cold-load trace.
+    let measured = false;
+    function ensureMeasured() {
+      if (!measured) {
+        measured = true;
+        measureLayout();
+      }
+    }
+
     // Non-reflow scroll synchronization loop
     function onScroll() {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
+          ensureMeasured();
           if (cachedTotalScrollHeight <= 0) {
             isTicking = false;
             return;
@@ -417,7 +428,8 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
     function handleResize() {
       if (resizeTimer) clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        measureLayout();
+        // Only re-measure if we have measured before; otherwise stay lazy.
+        if (measured) measureLayout();
         onScroll();
       }, 100);
     }
@@ -425,33 +437,9 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Lazy layout measurement: ONLY measure when runway approaches viewport
-    // Never touches DOM geometry during cold initial paint of the hero section
-    let isObserved = false;
-    if ('IntersectionObserver' in window && container) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isObserved) {
-            isObserved = true;
-            measureLayout();
-            onScroll();
-            observer.disconnect();
-          }
-        });
-      }, { rootMargin: '300px 0px' });
-      observer.observe(container);
-    } else {
-      window.addEventListener('scroll', () => {
-        if (!isObserved) {
-          isObserved = true;
-          measureLayout();
-          onScroll();
-        }
-      }, { passive: true, once: true });
-    }
-
     // Scroll window smoothly to specific slide index
     function scrollToSlide(index: number) {
+      ensureMeasured();
       const clamped = Math.max(0, Math.min(totalCards - 1, index));
       const targetProgress = clamped / (totalCards - 1);
       const targetScrollTop = cachedContainerTop + (targetProgress * cachedTotalScrollHeight);

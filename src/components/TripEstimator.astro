@@ -126,7 +126,37 @@
 </section>
 
 <script>
-  import { animateCounter } from '../scripts/animations';
+  // Dependency-free counter tween (replaces the anime.js import: -13 KiB JS on the page).
+  // Same behaviour: ~650ms ease-out, starts from last value (or 70% of target), honours reduced motion.
+  let counterRaf = 0;
+  function animateCounter(element: HTMLElement, targetValue: number, prefix = '$', suffix = '') {
+    if (!element) return;
+    const format = (v: number) => `${prefix}${Math.round(v).toLocaleString()}${suffix}`;
+    cancelAnimationFrame(counterRaf);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      element.textContent = format(targetValue);
+      element.setAttribute('data-current-val', String(targetValue));
+      return;
+    }
+
+    const from = parseInt(element.getAttribute('data-current-val') || '0', 10) || targetValue * 0.7;
+    const duration = 650;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - t) * (1 - t); // outQuad
+      element.textContent = format(from + (targetValue - from) * eased);
+      if (t < 1) {
+        counterRaf = requestAnimationFrame(tick);
+      } else {
+        element.setAttribute('data-current-val', String(targetValue));
+        element.textContent = format(targetValue);
+      }
+    };
+    counterRaf = requestAnimationFrame(tick);
+  }
 
   function initTripEstimator() {
     const slider = document.getElementById('duration-slider') as HTMLInputElement;

@@ -73,6 +73,7 @@
     let isVisible = false;
     let cachedDocHeight = 0;
 
+    let hudMeasured = false;
     function measureDocHeight() {
       cachedDocHeight = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
     }
@@ -80,6 +81,11 @@
     function onWindowScroll() {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
+          // Lazy: first layout read happens on first scroll, never during load.
+          if (!hudMeasured) {
+            hudMeasured = true;
+            measureDocHeight();
+          }
           const scrollTop = window.scrollY || window.pageYOffset;
 
           const shouldBeVisible = scrollTop > 400;
@@ -110,19 +116,13 @@
     function onWindowResize() {
       if (hudResizeTimer) clearTimeout(hudResizeTimer);
       hudResizeTimer = setTimeout(() => {
-        measureDocHeight();
+        if (hudMeasured) measureDocHeight();
         onWindowScroll();
       }, 100);
     }
 
     window.addEventListener('scroll', onWindowScroll, { passive: true });
     window.addEventListener('resize', onWindowResize, { passive: true });
-
-    // Defer initial measurement until after paint
-    requestAnimationFrame(() => {
-      measureDocHeight();
-      onWindowScroll();
-    });
 
     if (backToTopBtn) {
       backToTopBtn.addEventListener('click', () => {
