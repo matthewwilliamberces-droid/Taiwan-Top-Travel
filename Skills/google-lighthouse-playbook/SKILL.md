@@ -1,20 +1,20 @@
 ---
 name: google-lighthouse-playbook
 description: >-
-  Comprehensive Google Lighthouse & PageSpeed Insights optimization playbook for modern Laravel,
-  TALL stack, and Livewire applications. Covers actionable patterns to hit 90+ across Performance,
-  Accessibility, SEO, Best Practices, and Agentic Browsing audits.
+  Comprehensive Google Lighthouse & PageSpeed Insights optimization playbook for modern web applications
+  (Astro, Vite, Laravel/TALL stack). Covers actionable patterns to hit 90+ Mobile and 95+ Desktop across
+  Performance, Accessibility, SEO, Best Practices, and Agentic Browsing audits.
 ---
 
 # Google Lighthouse & PageSpeed Optimization Playbook
 
-This playbook provides an battle-tested, repeatable methodology for diagnosing, fixing, and maintaining **90+ scores** across Google Lighthouse and PageSpeed Insights audits on web applications, specifically tailored for Laravel, Tailwind CSS, Alpine.js, and Livewire (TALL Stack).
+This playbook provides a battle-tested, repeatable methodology for diagnosing, fixing, and maintaining **90+ mobile and 95+ desktop scores** across Google Lighthouse and PageSpeed Insights audits on modern web applications, covering Astro, static/SSR frontends, Laravel, and the TALL stack.
 
 ---
 
 ## 1. The Core Audit Triad: Patterns Identified Across Projects
 
-Across both **Viaje Car Rental** (`98886107-30c2-4791-a311-874a9606ee92`) and **TowerBento US**, Lighthouse regressions stem from four universal recurring anti-patterns:
+Across **Viaje Car Rental**, **TowerBento US**, and **Taiwan Top Travel**, Lighthouse regressions stem from recurring anti-patterns that disproportionately punish mobile devices:
 
 1. **Unscoped External CDNs & Font Bloat:**
    - CDN Tailwind (`cdn.tailwindcss.com`) blocking first paint by 800–1,500ms.
@@ -30,6 +30,13 @@ Across both **Viaje Car Rental** (`98886107-30c2-4791-a311-874a9606ee92`) and **
    - Missing explicit `width` and `height` attributes causing layout shift when images load.
    - Missing `fetchpriority="high"` on above-the-fold hero images.
    - Below-the-fold images missing `loading="lazy"` and `decoding="async"`.
+5. **Inlined CSS HTML Bloat Without Gzip (The Mobile FCP Bottleneck):**
+   - Inlining all styles (`inlineStylesheets: 'always'`) eliminates render-blocking stylesheet roundtrips, but bloats raw `index.html` payload (e.g. 200KB+).
+   - If hosting (e.g. Nixpacks, basic static file servers) lacks active Gzip/Brotli compression, simulated 4G mobile transfer times take >1.1s, penalizing FCP and dropping mobile scores into the low 80s.
+6. **Cold-Load DOM Geometry Reads & Layout Thrashing (TBT Penalties):**
+   - Reading element positions (`getBoundingClientRect()`, `offsetWidth`, `scrollHeight`) immediately during page load or component initialization forces layout reflows on weak mobile CPU threads, destroying Total Blocking Time (TBT).
+7. **Runtime Animation Library Overhead:**
+   - Bundling heavyweight animation libraries (`anime.js`, `gsap`) for micro-interactions (counters, hero zooms) consumes 15–30KB of JS and introduces hydration lag. Pure CSS keyframes and native `requestAnimationFrame` consume zero bundle overhead.
 
 ---
 
@@ -89,6 +96,55 @@ Across both **Viaje Car Rental** (`98886107-30c2-4791-a311-874a9606ee92`) and **
 
 #### 4. Avoid Artificial Micro-Delays in JavaScript
 - Do not hide content behind Alpine `setTimeout()` or JavaScript fade-in timers on initial paint; this directly penalizes LCP and First Contentful Paint (FCP).
+
+#### 5. Mobile Compression & Inlined CSS Trade-Offs (The Gzip Mandate)
+- **The Pitfall:** Inlining all stylesheets (`inlineStylesheets: 'always'` in Astro/SSG) successfully eliminates render-blocking stylesheet roundtrips, but inflates the raw `index.html` document (e.g. from 30KB to 220KB).
+- **The Mobile Consequence:** Under Lighthouse mobile throttling (Slow 4G / 1.6 Mbps / 150ms RTT), an uncompressed 220KB HTML download consumes over 1.1s of network transfer time before the parser can even begin, spiking FCP from 2.2s to 3.1s and sinking mobile performance into the low 80s.
+- **Rule:** If CSS is inlined, production hosting **must** serve the document with Gzip or Brotli compression. In containerized platforms (like Coolify/Docker), avoid default minimal file servers (e.g., raw Nixpacks) that serve uncompressed HTML. Use an explicit Nginx/Caddy container with `gzip on` and `gzip_types text/html text/css application/javascript`. Compressing 220KB down to ~40KB immediately reclaims ~800ms of FCP.
+
+#### 6. Zero Cold-Load Layout Thrashing (Lazy Geometry Reads)
+- **The Pitfall:** Calling geometry-reading APIs (`getBoundingClientRect()`, `offsetWidth`, `offsetHeight`, `scrollHeight`) during DOMContentLoaded or component hydration forces synchronous layout calculations on low-end mobile CPUs, inflating Total Blocking Time (TBT).
+- **Rule:** Defer all coordinate measurements to an interaction trigger (e.g., user scroll) rather than executing them on initial paint:
+  ```javascript
+  // BAD: Layout thrashing on cold page load
+  measureRunway();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // GOOD: Zero main-thread overhead on initial load; measure lazily on first interaction
+  let isMeasured = false;
+  function ensureMeasured() {
+    if (isMeasured) return;
+    measureRunway();
+    isMeasured = true;
+  }
+  window.addEventListener('scroll', () => {
+    ensureMeasured();
+    onScroll();
+  }, { passive: true });
+  ```
+
+#### 7. Purge Heavy JS Animation Runtimes for Native rAF & Composited CSS
+- **The Pitfall:** Bundling third-party animation runtimes (`anime.js`, `gsap`, etc.) for simple counters or hero visual effects consumes 15–30KB of JS that must parse, compile, and execute on the mobile main thread.
+- **Numerical Counters:** Replace external libraries with native, zero-dependency `requestAnimationFrame` loops using a quadratic ease-out function:
+  ```javascript
+  function animateValue(el, start, end, duration) {
+    const startTime = performance.now();
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+      el.textContent = Math.round(start + (end - start) * ease).toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  ```
+- **Cinematic Zoom & Pan:** Implement slow hero zooms using pure CSS keyframes (`@keyframes heroZoom`) animating only `transform: scale()`. Hardware-accelerated CSS animations run off the compositor thread without triggering mobile main-thread jank.
+
+#### 8. Mobile-Targeted Image Downscaling & WebP Transcoding
+- **Rule:** Never serve full desktop resolutions (1200px+) to mobile devices where display containers rarely exceed 420px–480px width.
+- **Dynamic CDNs (Unsplash, Cloudinary):** Clamp requests to `w=600&q=75` for mobile viewport contexts instead of `w=1200`.
+- **Local Static Assets:** Convert all raw PNG and JPEG hero assets to WebP (`cwebp` or `sharp`) at quality 80. On Taiwan Top Travel, this stripped over 1MB of payload while preserving crisp retina display quality.
 
 ---
 
@@ -217,6 +273,10 @@ Before releasing any frontend change or deployment, execute this checklist:
 | [ ] | **Google Fonts subset** | Verify only needed weights & `display=swap` are requested. |
 | [ ] | **Hero image LCP** | Verify `fetchpriority="high"` and explicit dimensions (`width`, `height`). |
 | [ ] | **Card images** | Verify explicit dimensions, `loading="lazy"`, `decoding="async"`. |
+| [ ] | **Mobile image sizing** | Confirm mobile viewports receive constrained assets (`w<=600`, WebP/AVIF). |
+| [ ] | **Gzip/Brotli compression** | Inspect response headers: `curl -I -H "Accept-Encoding: gzip" <URL>`. Verify `Content-Encoding: gzip` on HTML. |
+| [ ] | **Cold-load layout reads** | Confirm zero `getBoundingClientRect()` / `offsetWidth` calls run before user interaction. |
+| [ ] | **Animation bundle purge** | Verify zero external animation libraries (`anime.js`, `gsap`) loaded for counters/visuals; use native rAF & CSS keyframes. |
 | [ ] | **Interactive icon buttons** | Grep `<button` and `<a` without text. Confirm all have `aria-label`. |
 | [ ] | **Form inputs & selects** | Grep `<input`, `<select`, `<textarea`. Confirm all have `id` + `<label>` or `aria-label`. |
 | [ ] | **Heading hierarchy** | Check DOM tree order: `h1` $\rightarrow$ `h2` $\rightarrow$ `h3`. No skipped levels. |
