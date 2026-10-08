@@ -3,7 +3,7 @@ import { TRANSIT_HUBS } from '../data/transit';
 ---
 
 <section id="transit" class="py-24 relative overflow-hidden bg-zinc-950 border-t border-b border-white/5">
-  <!-- Taiwan High-Speed Rail 700T Cinematic Background -->
+  <!-- Taiwan High-Speed Rail 700T Cinematic Background (50%+ Visibility) -->
   <div class="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
     <img 
       src="/images/taiwan-high-speed-rail.webp" 
@@ -12,10 +12,10 @@ import { TRANSIT_HUBS } from '../data/transit';
       height="1280"
       loading="lazy"
       decoding="async"
-      class="w-full h-full object-cover object-center opacity-20 scale-105" 
+      class="w-full h-full object-cover object-center opacity-55" 
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/80 to-zinc-950"></div>
-    <div class="absolute inset-0 bg-radial from-amber-500/5 via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/20 to-zinc-950/90"></div>
+    <div class="absolute inset-0 bg-zinc-950/20"></div>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -34,7 +34,7 @@ import { TRANSIT_HUBS } from '../data/transit';
     </div>
 
     <!-- Interactive Transit Dashboard -->
-    <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl bg-zinc-900/50 backdrop-blur-xl mb-12">
+    <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl bg-zinc-950/80 backdrop-blur-2xl mb-12">
       
       <!-- Top Telemetry Bar -->
       <div class="flex flex-wrap items-center justify-between gap-6 pb-6 border-b border-white/10 mb-8">
