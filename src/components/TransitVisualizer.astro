@@ -12,10 +12,9 @@ import { TRANSIT_HUBS } from '../data/transit';
       height="1280"
       loading="lazy"
       decoding="async"
-      class="w-full h-full object-cover object-center opacity-55" 
+      class="w-full h-full object-cover object-center opacity-75 contrast-105" 
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/20 to-zinc-950/90"></div>
-    <div class="absolute inset-0 bg-zinc-950/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/65 via-zinc-950/15 to-zinc-950/75"></div>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -139,9 +138,7 @@ import { TRANSIT_HUBS } from '../data/transit';
   </div>
 </section>
 
-<script>
-  import { TRANSIT_HUBS } from '../data/transit';
-
+<script is:inline define:vars={{ TRANSIT_HUBS }}>
   function initTransitVisualizer() {
     const nodes = document.querySelectorAll('.station-node');
     const progressBar = document.getElementById('progress-bar-line');
@@ -177,7 +174,7 @@ import { TRANSIT_HUBS } from '../data/transit';
 
           if (connectionsEl) {
             connectionsEl.innerHTML = hub.connections
-              .map((c: string) => `<span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">${c}</span>`)
+              .map((c) => `<span class="px-3 py-1 rounded-lg text-xs bg-white/5 text-zinc-200 border border-white/10">${c}</span>`)
               .join('');
           }
         }

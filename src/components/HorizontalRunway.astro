@@ -308,8 +308,6 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
 
 <!-- RUNWAY CONTROLLER & SCROLL SYNCHRONIZATION -->
 <script>
-  import { animate, createScope } from 'animejs';
-
   function initRunway() {
     const container = document.getElementById('itinerary-runway-container');
     const track = document.getElementById('itinerary-runway-track');
@@ -381,14 +379,20 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
       });
     }
 
-    // Geometry is measured lazily on the FIRST scroll/interaction (never during load),
-    // so it cannot show up as a forced reflow in the cold-load trace.
+    // Geometry is measured during browser idle phase (or lazily on first scroll fallback)
+    // to eliminate forced reflows during scroll events.
     let measured = false;
     function ensureMeasured() {
       if (!measured) {
         measured = true;
         measureLayout();
       }
+    }
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(ensureMeasured, { timeout: 1500 });
+    } else {
+      setTimeout(ensureMeasured, 300);
     }
 
     // Non-reflow scroll synchronization loop

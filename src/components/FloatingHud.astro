@@ -76,6 +76,14 @@
     let hudMeasured = false;
     function measureDocHeight() {
       cachedDocHeight = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      hudMeasured = true;
+    }
+
+    // Schedule measurement during idle phase so scroll never forces layout calculation
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(measureDocHeight, { timeout: 1500 });
+    } else {
+      setTimeout(measureDocHeight, 300);
     }
 
     function onWindowScroll() {

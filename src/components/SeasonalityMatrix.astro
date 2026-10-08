@@ -5,6 +5,19 @@ import { TOP_10_ITINERARIES } from '../data/itineraries';
 const ITINERARY_MAP = Object.fromEntries(TOP_10_ITINERARIES.map(it => [it.id, it]));
 const initialData = SEASONALITY_DATA[9]; // October (Autumn default)
 const initialItinerary = ITINERARY_MAP[initialData.recommendedItineraryId] || TOP_10_ITINERARIES[0];
+
+// Lightweight lookup map for inline client script without bundling full data objects
+const MINIMAL_ITINERARY_MAP = Object.fromEntries(
+  TOP_10_ITINERARIES.map(it => [
+    it.id,
+    {
+      title: it.title,
+      duration: it.duration,
+      tier: it.tier,
+      slug: it.slug
+    }
+  ])
+);
 ---
 
 <section id="seasonality" class="py-24 relative overflow-hidden bg-zinc-950">
@@ -154,24 +167,8 @@ const initialItinerary = ITINERARY_MAP[initialData.recommendedItineraryId] || TO
   </div>
 </section>
 
-<script>
-  import { SEASONALITY_DATA } from '../data/seasonality';
-  import { TOP_10_ITINERARIES } from '../data/itineraries';
-
-  const ITINERARY_MAP = Object.fromEntries(TOP_10_ITINERARIES.map(it => [it.id, it]));
-
-  const SEASON_STYLES: Record<string, {
-    bgGradient: string;
-    glow: string;
-    cardBorder: string;
-    tabActiveClass: string[];
-    badgeClass: string;
-    tempClass: string;
-    spectacleClass: string;
-    circuitMetaClass: string;
-    circuitDotClass: string;
-    btnClass: string;
-  }> = {
+<script is:inline define:vars={{ MINIMAL_ITINERARY_MAP, SEASONALITY_DATA }}>
+  const SEASON_STYLES = {
     Spring: {
       bgGradient: 'bg-gradient-to-br from-emerald-950/50 via-zinc-900/80 to-zinc-950/90',
       glow: 'bg-emerald-500/15',
@@ -269,10 +266,10 @@ const initialItinerary = ITINERARY_MAP[initialData.recommendedItineraryId] || TO
 
         // Update spotlight card seasonal ambiance
         if (seasonBg) {
-          seasonBg.className = `absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${style.bgGradient}`;
+          seasonBg.className = 'absolute inset-0 pointer-events-none transition-all duration-700 ease-out ' + style.bgGradient;
         }
         if (seasonGlow) {
-          seasonGlow.className = `absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl pointer-events-none transition-all duration-700 ${style.glow}`;
+          seasonGlow.className = 'absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl pointer-events-none transition-all duration-700 ' + style.glow;
         }
         if (spotlightCard) {
           spotlightCard.classList.remove(...ALL_BORDER_CLASSES);
@@ -298,7 +295,7 @@ const initialItinerary = ITINERARY_MAP[initialData.recommendedItineraryId] || TO
         if (tipsEl) tipsEl.textContent = data.tips;
 
         // Update Recommended Itinerary Circuit dynamically
-        const itinerary = ITINERARY_MAP[data.recommendedItineraryId] || TOP_10_ITINERARIES[0];
+        const itinerary = MINIMAL_ITINERARY_MAP[data.recommendedItineraryId] || Object.values(MINIMAL_ITINERARY_MAP)[0];
         if (itinerary) {
           if (itineraryTitleEl) itineraryTitleEl.textContent = itinerary.title;
           if (itineraryMetaEl) {
