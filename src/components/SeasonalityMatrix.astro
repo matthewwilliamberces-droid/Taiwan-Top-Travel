@@ -1,5 +1,10 @@
 ---
 import { SEASONALITY_DATA } from '../data/seasonality';
+import { TOP_10_ITINERARIES } from '../data/itineraries';
+
+const ITINERARY_MAP = Object.fromEntries(TOP_10_ITINERARIES.map(it => [it.id, it]));
+const initialData = SEASONALITY_DATA[9]; // October (Autumn default)
+const initialItinerary = ITINERARY_MAP[initialData.recommendedItineraryId] || TOP_10_ITINERARIES[0];
 ---
 
 <section id="seasonality" class="py-24 relative overflow-hidden bg-zinc-950">
@@ -29,73 +34,115 @@ import { SEASONALITY_DATA } from '../data/seasonality';
 
     <!-- 12-Month Selector Strip -->
     <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-8">
-      {SEASONALITY_DATA.map((item, idx) => (
-        <button
-          type="button"
-          data-month-index={idx}
-          class={`month-tab group p-3 rounded-2xl glass-panel text-center transition-all duration-300 hover:border-amber-400/60 focus:outline-none ${idx === 9 ? 'border-amber-400/80 bg-amber-950/40' : 'hover:scale-105'}`}
-        >
-          <span class="text-[10px] text-zinc-400 uppercase tracking-widest block font-mono">{item.month}</span>
-          <span class="text-xs sm:text-sm font-semibold text-white block mt-0.5 group-hover:text-amber-300">{item.name.slice(0, 3)}</span>
-          <span class="text-[9px] text-zinc-400 block mt-1">{item.avgTemp.split('â€“')[0]}</span>
-        </button>
-      ))}
+      {SEASONALITY_DATA.map((item, idx) => {
+        const isDefault = idx === 9;
+        const seasonDotColor = 
+          item.season === 'Spring' ? 'bg-emerald-400' :
+          item.season === 'Summer' ? 'bg-amber-400' :
+          item.season === 'Autumn' ? 'bg-orange-400' : 'bg-cyan-400';
+
+        return (
+          <button
+            type="button"
+            data-month-index={idx}
+            data-season={item.season}
+            class={`month-tab group p-3 rounded-2xl glass-panel text-center transition-all duration-300 focus:outline-none relative overflow-hidden ${
+              isDefault 
+                ? 'border-orange-400/80 bg-orange-950/50 text-orange-300 shadow-[0_0_20px_rgba(249,115,22,0.25)]' 
+                : 'hover:border-white/30 hover:scale-105 text-zinc-400'
+            }`}
+          >
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[9px] text-zinc-400 uppercase tracking-widest font-mono">{item.month}</span>
+              <span class={`w-1.5 h-1.5 rounded-full ${seasonDotColor}`}></span>
+            </div>
+            <span class="month-name text-xs sm:text-sm font-semibold text-white block mt-0.5 group-hover:text-amber-300 transition-colors">
+              {item.name.slice(0, 3)}
+            </span>
+            <span class="text-[9px] text-zinc-400 block mt-1 font-mono">
+              {item.avgTemp.split(/[-–]/)[0].trim()}
+            </span>
+          </button>
+        );
+      })}
     </div>
 
-    <!-- Spotlight Showcase Card for Active Month -->
-    <div id="month-spotlight-card" class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl bg-zinc-900/60 backdrop-blur-xl relative overflow-hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <!-- Spotlight Showcase Card for Active Month with dynamic seasonal background -->
+    <div 
+      id="month-spotlight-card" 
+      class="glass-panel rounded-3xl p-6 sm:p-10 border border-orange-500/30 shadow-2xl bg-zinc-900/60 backdrop-blur-xl relative overflow-hidden transition-all duration-700"
+    >
+      <!-- Dynamic Seasonal Background Layer -->
+      <div 
+        id="spotlight-season-bg" 
+        class="absolute inset-0 pointer-events-none transition-all duration-700 ease-out bg-gradient-to-br from-orange-950/40 via-zinc-900/80 to-zinc-950/90"
+      ></div>
+      <div 
+        id="spotlight-season-glow" 
+        class="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl pointer-events-none transition-all duration-700 bg-orange-500/15"
+      ></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
         
         <div class="lg:col-span-8 space-y-6">
           <div class="flex flex-wrap items-center gap-3">
-            <span id="spotlight-badge" class="px-3 py-1 rounded-full text-xs font-semibold uppercase bg-orange-500/20 text-orange-300 border border-orange-500/30 transition-colors duration-300">
-              Peak Season (Autumn)
+            <span id="spotlight-badge" class="px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300 bg-orange-500/20 text-orange-300 border-orange-500/30">
+              {initialData.crowdLevel} Season ({initialData.season})
             </span>
             <span id="spotlight-month" class="text-2xl sm:text-3xl font-serif text-white font-bold">
-              October
+              {initialData.name}
             </span>
-            <span id="spotlight-temp" class="text-sm font-mono text-amber-300 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              22Â°C â€“ 28Â°C (71Â°F â€“ 82Â°F)
+            <span id="spotlight-temp" class="text-sm font-mono text-orange-300 px-3 py-1 rounded-full bg-white/5 border border-white/10 transition-colors duration-300">
+              {initialData.avgTemp}
             </span>
           </div>
 
           <div>
             <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Seasonal Spectacle</span>
-            <h3 id="spotlight-spectacle" class="text-xl sm:text-2xl font-serif text-amber-200 font-medium">
-              Taroko Gorge Clifftop Season & High Mountain Autumn Oolong Roast
+            <h3 id="spotlight-spectacle" class="text-xl sm:text-2xl font-serif text-orange-200 font-medium transition-colors duration-300">
+              {initialData.spectacle}
             </h3>
           </div>
 
           <p id="spotlight-desc" class="text-sm text-zinc-300 leading-relaxed font-light">
-            Optimal travel weather of the year; dry, sunny, and temperate across the central spine and east coast. The single best month to execute the complete island traverse.
+            {initialData.weatherDesc}
           </p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
             <div>
               <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Prime Regions</span>
               <p id="spotlight-regions" class="text-xs font-semibold text-white">
-                All Regions: Island-wide Peak Season
+                {initialData.bestRegions.join(', ')}
               </p>
             </div>
             <div>
               <span class="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Concierge Advisory</span>
               <p id="spotlight-tips" class="text-xs text-zinc-300">
-                Book private helicopter and luxury suites 6 months in advance.
+                {initialData.tips}
               </p>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-4 flex flex-col justify-center items-start lg:items-end p-6 rounded-2xl bg-zinc-950/70 border border-white/10">
-          <span class="text-[10px] uppercase tracking-widest text-zinc-400 mb-1">Recommended Circuit</span>
-          <h4 id="spotlight-itinerary-title" class="text-lg font-serif text-white font-semibold mb-2 lg:text-right">
-            The Grand Formosa Grand Tour
+        <!-- Recommended Circuit Box (Dynamically updates per season & month) -->
+        <div 
+          id="spotlight-itinerary-card" 
+          class="lg:col-span-4 flex flex-col justify-center items-start lg:items-end p-6 rounded-2xl bg-zinc-950/70 border border-orange-500/30 transition-all duration-500"
+        >
+          <div class="flex items-center gap-2 mb-1">
+            <span id="spotlight-circuit-dot" class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+            <span class="text-[10px] uppercase tracking-widest text-zinc-400">Recommended Circuit</span>
+          </div>
+          <h4 id="spotlight-itinerary-title" class="text-lg font-serif text-white font-semibold mb-1 lg:text-right transition-colors duration-300">
+            {initialItinerary.title}
           </h4>
-          <span class="text-xs text-amber-400 mb-6 font-mono">12 Days / Ultra-Luxe Bespoke</span>
+          <span id="spotlight-itinerary-meta" class="text-xs text-orange-400 mb-6 font-mono lg:text-right transition-colors duration-300">
+            {initialItinerary.duration} Days / {initialItinerary.tier}
+          </span>
           <a 
             id="spotlight-itinerary-link"
-            href="#itineraries" 
-            class="w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95"
+            href={`/itineraries/${initialItinerary.slug}`} 
+            class="w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-orange-400 hover:bg-orange-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95"
           >
             Review Recommended Circuit
           </a>
@@ -109,9 +156,88 @@ import { SEASONALITY_DATA } from '../data/seasonality';
 
 <script>
   import { SEASONALITY_DATA } from '../data/seasonality';
+  import { TOP_10_ITINERARIES } from '../data/itineraries';
+
+  const ITINERARY_MAP = Object.fromEntries(TOP_10_ITINERARIES.map(it => [it.id, it]));
+
+  const SEASON_STYLES: Record<string, {
+    bgGradient: string;
+    glow: string;
+    cardBorder: string;
+    tabActiveClass: string[];
+    badgeClass: string;
+    tempClass: string;
+    spectacleClass: string;
+    circuitMetaClass: string;
+    circuitDotClass: string;
+    btnClass: string;
+  }> = {
+    Spring: {
+      bgGradient: 'bg-gradient-to-br from-emerald-950/50 via-zinc-900/80 to-zinc-950/90',
+      glow: 'bg-emerald-500/15',
+      cardBorder: 'border-emerald-500/30',
+      tabActiveClass: ['border-emerald-400/80', 'bg-emerald-950/50', 'text-emerald-300', 'shadow-[0_0_20px_rgba(16,185,129,0.25)]'],
+      badgeClass: 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300 bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      tempClass: 'text-sm font-mono text-emerald-300 px-3 py-1 rounded-full bg-emerald-950/30 border border-emerald-500/20 transition-colors duration-300',
+      spectacleClass: 'text-xl sm:text-2xl font-serif text-emerald-200 font-medium transition-colors duration-300',
+      circuitMetaClass: 'text-xs text-emerald-400 mb-6 font-mono lg:text-right transition-colors duration-300',
+      circuitDotClass: 'w-1.5 h-1.5 rounded-full bg-emerald-400',
+      btnClass: 'w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-emerald-400 hover:bg-emerald-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95'
+    },
+    Summer: {
+      bgGradient: 'bg-gradient-to-br from-amber-950/50 via-zinc-900/80 to-zinc-950/90',
+      glow: 'bg-amber-500/15',
+      cardBorder: 'border-amber-500/30',
+      tabActiveClass: ['border-amber-400/80', 'bg-amber-950/50', 'text-amber-300', 'shadow-[0_0_20px_rgba(245,158,11,0.25)]'],
+      badgeClass: 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300 bg-amber-500/20 text-amber-300 border-amber-500/30',
+      tempClass: 'text-sm font-mono text-amber-300 px-3 py-1 rounded-full bg-amber-950/30 border border-amber-500/20 transition-colors duration-300',
+      spectacleClass: 'text-xl sm:text-2xl font-serif text-amber-200 font-medium transition-colors duration-300',
+      circuitMetaClass: 'text-xs text-amber-400 mb-6 font-mono lg:text-right transition-colors duration-300',
+      circuitDotClass: 'w-1.5 h-1.5 rounded-full bg-amber-400',
+      btnClass: 'w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95'
+    },
+    Autumn: {
+      bgGradient: 'bg-gradient-to-br from-orange-950/50 via-zinc-900/80 to-zinc-950/90',
+      glow: 'bg-orange-500/15',
+      cardBorder: 'border-orange-500/30',
+      tabActiveClass: ['border-orange-400/80', 'bg-orange-950/50', 'text-orange-300', 'shadow-[0_0_20px_rgba(249,115,22,0.25)]'],
+      badgeClass: 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300 bg-orange-500/20 text-orange-300 border-orange-500/30',
+      tempClass: 'text-sm font-mono text-orange-300 px-3 py-1 rounded-full bg-orange-950/30 border border-orange-500/20 transition-colors duration-300',
+      spectacleClass: 'text-xl sm:text-2xl font-serif text-orange-200 font-medium transition-colors duration-300',
+      circuitMetaClass: 'text-xs text-orange-400 mb-6 font-mono lg:text-right transition-colors duration-300',
+      circuitDotClass: 'w-1.5 h-1.5 rounded-full bg-orange-400',
+      btnClass: 'w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-orange-400 hover:bg-orange-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95'
+    },
+    Winter: {
+      bgGradient: 'bg-gradient-to-br from-cyan-950/50 via-zinc-900/80 to-zinc-950/90',
+      glow: 'bg-cyan-500/15',
+      cardBorder: 'border-cyan-500/30',
+      tabActiveClass: ['border-cyan-400/80', 'bg-cyan-950/50', 'text-cyan-300', 'shadow-[0_0_20px_rgba(6,182,212,0.25)]'],
+      badgeClass: 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300 bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+      tempClass: 'text-sm font-mono text-cyan-300 px-3 py-1 rounded-full bg-cyan-950/30 border border-cyan-500/20 transition-colors duration-300',
+      spectacleClass: 'text-xl sm:text-2xl font-serif text-cyan-200 font-medium transition-colors duration-300',
+      circuitMetaClass: 'text-xs text-cyan-400 mb-6 font-mono lg:text-right transition-colors duration-300',
+      circuitDotClass: 'w-1.5 h-1.5 rounded-full bg-cyan-400',
+      btnClass: 'w-full lg:w-auto px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 transition-all text-center shadow-lg hover:scale-105 active:scale-95'
+    }
+  };
+
+  const ALL_TAB_ACTIVE_CLASSES = [
+    'border-emerald-400/80', 'bg-emerald-950/50', 'text-emerald-300', 'shadow-[0_0_20px_rgba(16,185,129,0.25)]',
+    'border-amber-400/80', 'bg-amber-950/50', 'text-amber-300', 'shadow-[0_0_20px_rgba(245,158,11,0.25)]',
+    'border-orange-400/80', 'bg-orange-950/50', 'text-orange-300', 'shadow-[0_0_20px_rgba(249,115,22,0.25)]',
+    'border-cyan-400/80', 'bg-cyan-950/50', 'text-cyan-300', 'shadow-[0_0_20px_rgba(6,182,212,0.25)]'
+  ];
+
+  const ALL_BORDER_CLASSES = [
+    'border-emerald-500/30', 'border-amber-500/30', 'border-orange-500/30', 'border-cyan-500/30', 'border-white/10'
+  ];
 
   function initSeasonalityMatrix() {
     const tabs = document.querySelectorAll('.month-tab');
+    const spotlightCard = document.getElementById('month-spotlight-card');
+    const seasonBg = document.getElementById('spotlight-season-bg');
+    const seasonGlow = document.getElementById('spotlight-season-glow');
     const badgeEl = document.getElementById('spotlight-badge');
     const monthEl = document.getElementById('spotlight-month');
     const tempEl = document.getElementById('spotlight-temp');
@@ -120,30 +246,75 @@ import { SEASONALITY_DATA } from '../data/seasonality';
     const regionsEl = document.getElementById('spotlight-regions');
     const tipsEl = document.getElementById('spotlight-tips');
 
+    const itineraryCard = document.getElementById('spotlight-itinerary-card');
+    const circuitDot = document.getElementById('spotlight-circuit-dot');
+    const itineraryTitleEl = document.getElementById('spotlight-itinerary-title');
+    const itineraryMetaEl = document.getElementById('spotlight-itinerary-meta');
+    const itineraryLinkEl = document.getElementById('spotlight-itinerary-link');
+
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('border-amber-400/80', 'bg-amber-950/40'));
-        tab.classList.add('border-amber-400/80', 'bg-amber-950/40');
-
         const indexStr = tab.getAttribute('data-month-index');
-        if (indexStr !== null) {
-          const idx = parseInt(indexStr, 10);
-          const data = SEASONALITY_DATA[idx];
-          if (data) {
-            if (badgeEl) {
-              badgeEl.textContent = `${data.crowdLevel} Season (${data.season})`;
-              badgeEl.className = 'px-3 py-1 rounded-full text-xs font-semibold uppercase border transition-colors duration-300';
-              if (data.season === 'Spring') badgeEl.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/30');
-              else if (data.season === 'Summer') badgeEl.classList.add('bg-amber-500/20', 'text-amber-300', 'border-amber-500/30');
-              else if (data.season === 'Autumn') badgeEl.classList.add('bg-orange-500/20', 'text-orange-300', 'border-orange-500/30');
-              else if (data.season === 'Winter') badgeEl.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/30');
-            }
-            if (monthEl) monthEl.textContent = `${data.name}`;
-            if (tempEl) tempEl.textContent = `${data.avgTemp}`;
-            if (spectacleEl) spectacleEl.textContent = `${data.spectacle}`;
-            if (descEl) descEl.textContent = `${data.weatherDesc}`;
-            if (regionsEl) regionsEl.textContent = data.bestRegions.join(', ');
-            if (tipsEl) tipsEl.textContent = `${data.tips}`;
+        if (indexStr === null) return;
+        const idx = parseInt(indexStr, 10);
+        const data = SEASONALITY_DATA[idx];
+        if (!data) return;
+
+        const style = SEASON_STYLES[data.season] || SEASON_STYLES.Autumn;
+
+        // Reset all tabs active state
+        tabs.forEach(t => t.classList.remove(...ALL_TAB_ACTIVE_CLASSES));
+        // Add active classes to selected tab
+        tab.classList.add(...style.tabActiveClass);
+
+        // Update spotlight card seasonal ambiance
+        if (seasonBg) {
+          seasonBg.className = `absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${style.bgGradient}`;
+        }
+        if (seasonGlow) {
+          seasonGlow.className = `absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl pointer-events-none transition-all duration-700 ${style.glow}`;
+        }
+        if (spotlightCard) {
+          spotlightCard.classList.remove(...ALL_BORDER_CLASSES);
+          spotlightCard.classList.add(style.cardBorder);
+        }
+
+        // Update Text & Badges
+        if (badgeEl) {
+          badgeEl.textContent = `${data.crowdLevel} Season (${data.season})`;
+          badgeEl.className = style.badgeClass;
+        }
+        if (monthEl) monthEl.textContent = data.name;
+        if (tempEl) {
+          tempEl.textContent = data.avgTemp;
+          tempEl.className = style.tempClass;
+        }
+        if (spectacleEl) {
+          spectacleEl.textContent = data.spectacle;
+          spectacleEl.className = style.spectacleClass;
+        }
+        if (descEl) descEl.textContent = data.weatherDesc;
+        if (regionsEl) regionsEl.textContent = data.bestRegions.join(', ');
+        if (tipsEl) tipsEl.textContent = data.tips;
+
+        // Update Recommended Itinerary Circuit dynamically
+        const itinerary = ITINERARY_MAP[data.recommendedItineraryId] || TOP_10_ITINERARIES[0];
+        if (itinerary) {
+          if (itineraryTitleEl) itineraryTitleEl.textContent = itinerary.title;
+          if (itineraryMetaEl) {
+            itineraryMetaEl.textContent = `${itinerary.duration} Days / ${itinerary.tier}`;
+            itineraryMetaEl.className = style.circuitMetaClass;
+          }
+          if (itineraryLinkEl) {
+            itineraryLinkEl.setAttribute('href', `/itineraries/${itinerary.slug}`);
+            itineraryLinkEl.className = style.btnClass;
+          }
+          if (circuitDot) {
+            circuitDot.className = style.circuitDotClass;
+          }
+          if (itineraryCard) {
+            itineraryCard.classList.remove(...ALL_BORDER_CLASSES);
+            itineraryCard.classList.add(style.cardBorder);
           }
         }
       });

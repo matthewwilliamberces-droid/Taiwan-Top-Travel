@@ -110,7 +110,7 @@ export const SEASONALITY_DATA: MonthProfile[] = [
   },
   {
     month: '09',
-    name: 'Autumn',
+    name: 'September',
     season: 'Autumn',
     avgTemp: '25°C - 31°C',
     crowdLevel: 'Moderate',
@@ -126,10 +126,10 @@ export const SEASONALITY_DATA: MonthProfile[] = [
     season: 'Autumn',
     avgTemp: '22°C - 28°C',
     crowdLevel: 'Peak',
-    weatherDesc: 'Optimal travel weather of the year; dry, sunny, and temperate.',
-    spectacle: 'Taroko Gorge Marathon & Autumn High Mountain Oolong Harvest',
-    bestRegions: ['Taroko', 'Taipei', 'Kaohsiung'],
-    recommendedItineraryId: 'itinerary-4',
+    weatherDesc: 'Optimal travel weather of the year; dry, sunny, and temperate across the central spine and east coast. The single best month to execute the complete island traverse.',
+    spectacle: 'Taroko Gorge Clifftop Season & High Mountain Autumn Oolong Roast',
+    bestRegions: ['All Regions: Island-wide Peak Season', 'Taroko', 'Sun Moon Lake'],
+    recommendedItineraryId: 'itinerary-1',
     tips: 'Book private helicopter and luxury suites 6 months in advance.'
   },
   {
